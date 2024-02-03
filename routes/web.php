@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AchatController;
 use App\Http\Controllers\SocieteController;
 use App\Http\Controllers\FournisseurController;
+use App\Http\Controllers\AchatPaiementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,14 +46,36 @@ Route::prefix("fournisseurs")->group(function () {
 
 // Buy routes
 Route::prefix("achats")->group(function () {
+    // Invoices routes
     Route::get("/", [AchatController::class, "index"]);
     Route::get("/show/{id}", [AchatController::class, "showFacture"]);
-    Route::get("/edit/{id}", [AchatController::class, "editFacture"]);
+
     Route::get("/create", [AchatController::class, "create"]);
-    Route::get("/create_article", [AchatController::class, "createArticle"]);
     Route::post("/", [AchatController::class, "store"]);
+
+    Route::get("/create_article", [AchatController::class, "createArticle"]);
     Route::post("/store_article", [AchatController::class, "storeArticle"]);
+
+    Route::get("/edit/{id}", [AchatController::class, "editFacture"]);
+    Route::put("/update/{id}", [AchatController::class, "updateFacture"]);
+
+    Route::get("/edit_article/{id}", [AchatController::class, "editArticle"]);
+    Route::put("/update_article/{id}", [AchatController::class, "updateArticle"]);
+
     Route::post("/end_articale", [AchatController::class, "endArticle"]);
 
-    Route::put("/update/{id}", [AchatController::class, "updateFacture"]);
+    Route::delete("/delete/{id}", [AchatController::class, "destroyFacture"]);
+    Route::delete("/delete_article/{id}", [AchatController::class, "destroyArticle"]);
+
+});
+
+// payment invoices state routes
+Route::prefix("paiement_achats")->group(function () {
+    Route::get("/", [AchatPaiementController::class, "index"]);
+    Route::get("/detail_de_paiement/{id}", [AchatPaiementController::class, "showFactureDetails"]);
+
+    // make paiement functionality
+    Route::get("/create/{id}", [AchatPaiementController::class, "createPaiement"]);
+    Route::post("/pay/{id}", [AchatPaiementController::class, "makePayment"]);
+    
 });

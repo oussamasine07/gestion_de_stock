@@ -33,9 +33,15 @@
             <div class="card table-card">
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
-                        <a href="/achats/create" class="btn btn-primary">
-                            <i class="ti ti-plus f-18"></i> Ajouter Une Facture
+                        <a href="/achats" class="btn btn-primary">
+                            <i class="ti ti-plus f-18"></i> Back
                         </a>
+                        @if (session()->get("facture_details"))
+                            <a href="/achats/create_article" class="btn btn-success">
+                                <i class="ti ti-plus f-18"></i> Ajouter Une Article
+                            </a>
+                        @endif
+                        
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover" id="pc-dt-simple">
@@ -45,7 +51,13 @@
                                     <th>Prix Unitaire</th>
                                     <th>Quantité</th>
                                     <th>Montant total</th>
-                                    <th class="text-center">Details</th>
+                                    <th>Montant TVA</th>
+                                    <th>Montant TTC</th>
+                                    
+                                    @if (session()->get("facture_details"))
+                                        <th class="text-center">Details</th>
+                                    @endif
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +66,18 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+                        @if (session()->exists("facture_details"))
+                            <form action="/achats/end_articale" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="text-end btn-page mb-0 mt-4 col-md-6">
+                                        <button type="submit" class="btn btn-block btn-warning">Mettre a jour</button>
+                                    </div>
+                                </div>
+                            </form> 
+                        @endif
+                        
                     </div>
                 </div>
             </div>

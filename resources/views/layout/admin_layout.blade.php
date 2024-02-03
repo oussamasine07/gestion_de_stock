@@ -156,6 +156,7 @@
             {{-- change the links for categories --}}
             <li class="pc-item"><a class="pc-link" href="/achats">Tous les achats</a></li>
             <li class="pc-item"><a class="pc-link" href="/achats/create">Nouvelle facture</a></li>
+            <li class="pc-item"><a class="pc-link" href="/paiement_achats">Etat de Paiement Achats</a></li>
           </ul>
         </li>
         

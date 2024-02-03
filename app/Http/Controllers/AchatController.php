@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 
 class AchatController extends Controller
 {
-    // show all in voices
+    /* ----------------------------------------------------------------------------------- */
+    /* ------------------------------ SHOW FUNCTIONS  ------------------------------------ */
+    /* ----------------------------------------------------------------------------------- */
     public function index()
     {
         
@@ -20,8 +22,23 @@ class AchatController extends Controller
             "achats" => $company->achats
         ]);
     }
-
     
+    public function showFacture(string $id)
+    {
+        
+        $achat = Achat::find($id);
+        // dd($achat);
+        $articles = $achat->articaleAchats;
+        return view("achats.facture_achat", [
+            "achat" => $achat,
+            "articles" => $articles
+        ]);
+    }
+
+    /* ----------------------------------------------------------------------------------------------- */
+    /* ------------------------------ CREATE AND STORE FUNCTIONS  ------------------------------------ */
+    /* ----------------------------------------------------------------------------------------------- */
+    // show create form for new Invoice     
     public function create()
     {
         $societeId = auth()->user()->societe_id;
@@ -32,7 +49,7 @@ class AchatController extends Controller
         ]);
     }
 
-    
+    // store a new Invoice
     public function store(Request $request)
     {
         // validate the form
@@ -58,6 +75,7 @@ class AchatController extends Controller
         return redirect("/achats/create_article");
     }
 
+    // show create form for new Article
     public function createArticle (Request $request)
     {
         // check if the session id is created if not redirect to create a new invoice
@@ -73,6 +91,7 @@ class AchatController extends Controller
         }
     }
 
+    // store a new Article
     public function storeArticle (Request $request) 
     {
         // validate the form
@@ -93,43 +112,30 @@ class AchatController extends Controller
 
     }
 
-    public function endArticle (Request $request)
-    {
-        
-        $request->session()->forget('facture_details');
-        return redirect("/achats");
-    }
-
-    
-    public function showFacture(string $id)
-    {
-        $achat = Achat::find($id);
-        dd($achat);
-        $articles = $achat->articaleAchats;
-        return view("achats.facture_achat", [
-            "achat" => $achat,
-            "articles" => $articles
-        ]);
-    }
-
-    
+    /* ------------------------------------------------------------------------------------------------ */
+    /* -------------------------------- EDIT AND UPDATE FUNCTIONS  ------------------------------------ */
+    /* ------------------------------------------------------------------------------------------------ */
+    // show the edit form for Invoice    
     public function editFacture(string $id)
     {
         $societeId = auth()->user()->societe_id;
         $company = Societe::find($societeId);
+        $achat = Achat::find($id);
+
+        session([
+            "facture_details" => [
+                "id" => $achat->id,
+                "numero_facture" => $achat->numero_facture
+            ] 
+        ]);
 
         return view("achats.edit", [
-            "achat" => Achat::find($id),
+            "achat" => $achat,
             "fournisseurs" => $company->fournisseurs
         ]);
     }
-    
-    public function editArticle(string $id)
-    {
-        //
-    }
 
-    
+    // update the Invoice
     public function updateFacture(Request $request, string $id)
     {
         $formFields = $request->validate([
@@ -153,10 +159,64 @@ class AchatController extends Controller
 
         return redirect("/achats/show/{$id}");
     }
-
     
-    public function destroy(string $id)
+    // show the edit form for Article  
+    public function editArticle(Request $request, string $id)
     {
-        //
+        $factureDetails = $request->session()->get("facture_details");
+
+        return view("achats.edit_article", [
+            "article" => ArticleAchat::find($id),
+            "numero_facture" => $factureDetails["numero_facture"]
+        ]);
+    }
+
+    // update the Article
+    public function updateArticle (Request $request, string $id)
+    {
+        // validate the form
+        $formFields = $request->validate([
+            "nom_article" => "required",
+            "prix_unitaire" => "required",
+            "quantite" => "required",
+            "pourcentage_tva" => "required"
+        ]);
+        
+        ArticleAchat::where("id", $id)
+                        ->update($formFields);
+
+        $factureDetails = $request->session()->get("facture_details");
+
+        return redirect("/achats/show/{$factureDetails['id']}");
+    }
+
+    // end the session for updating or creating a new Invoice
+    public function endArticle (Request $request)
+    {
+        $request->session()->forget('facture_details');
+        return redirect("/achats");
+    }
+
+    /* ------------------------------------------------------------------------------------------------ */
+    /* --------------------------------------- DELETE FUNCTIONS  -------------------------------------- */
+    /* ------------------------------------------------------------------------------------------------ */
+    // delete the intire invoice
+    public function destroyFacture(string $id)
+    {
+        Achat::where("id", $id)
+                ->delete();
+        return redirect("/achats");
+    }
+    
+    // delete one article
+    public function destroyArticle(Request $request, string $id)
+    {
+        // delete article
+        ArticleAchat::where("id", $id)
+                        ->delete();
+
+        $factureDetails = $request->session()->get("facture_details");
+
+        return redirect("/achats/show/{$factureDetails['id']}");
     }
 }

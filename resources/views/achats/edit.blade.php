@@ -87,6 +87,21 @@
                                 <div class="text-end btn-page mb-0 mt-4">
                                     <button type="submit" class="btn btn-primary">Maitre A Joure et Suive Les Articles</button>
                                 </div>
+                                <div class="text-end btn-page mb-0 mt-4">
+                                    <a href="/achats/show/{{ $achat->id }}" class="btn btn-success">Modifier Les Articles</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+
+                    
+
+                    <form action="/achats/end_articale" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="text-end btn-page mb-0 mt-4 col-md-6">
+                                <button type="submit" class="btn btn-block btn-danger">Annullé</button>
                             </div>
                         </div>
                     </form>

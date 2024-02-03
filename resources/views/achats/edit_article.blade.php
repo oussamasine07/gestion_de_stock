@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/achats/edit_article/{{  }}" method="POST">
+                    <form action="/achats/update_article/{{ $article->id }}" method="POST">
                         @csrf
                         @method("PUT")
                         
@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Nom Article</label>
-                                    <input type="text" name="nom_article" value="{{ old('nom_article') }}"
+                                    <input type="text" name="nom_article" value="{{ $article->nom_article }}"
                                         class="form-control" placeholder="Enter Nom Article">
                                     @error('nom_article')
                                         <div class="error-message" id="bouncer-error_ date">
@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Prix Unitaire</label>
                                     <input type="number" class="form-control" placeholder="Enter Le Prix Unitaire"
-                                        name="prix_unitaire" value="{{ old('prix_unitaire') }}">
+                                        name="prix_unitaire" value="{{ $article->prix_unitaire }}">
                                     @error('prix_unitaire')
                                         <div class="error-message" id="bouncer-error_ date">
                                             {{ $message }}
@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Quantité</label>
                                     <input type="number" class="form-control" placeholder="Entrer La Quantité D'Article"
-                                        name="quantite" value="{{ old('quantite') }}">
+                                        name="quantite" value="{{ $article->quantite }}">
                                     @error('quantite')
                                         <div class="error-message" id="bouncer-error_ date">
                                             {{ $message }}
@@ -83,20 +83,12 @@
                                 </div>
 
                                 <div class="text-end btn-page mb-0 mt-4 col-md-6">
-                                    <button type="submit" class="btn btn-primary">Ajouter l'Article</button>
+                                    <button type="submit" class="btn btn-primary">Mettre a Joure l'Article</button>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <form action="/achats/end_articale" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="text-end btn-page mb-0 mt-4 col-md-6">
-                                <button type="submit" class="btn btn-block btn-success">Finnire La Facture</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
