@@ -11,8 +11,10 @@ use Illuminate\Database\Query\JoinClause;
 
 class AchatPaiementController extends Controller
 {
-    public function index () 
+    public function index (Request $request) 
     {
+        $numPages = $request["entres"] ? $request["entres"] : 10;
+        // filter by type 
         $etatPaiements = Achat::select(
             "achats.id",
             "achats.numero_facture", 
@@ -20,15 +22,52 @@ class AchatPaiementController extends Controller
             "etat_paiements.total_facture",
             "etat_paiements.montant_regle",
             "etat_paiements.rest_regle",
-            "etat_paiements.etat_reglement"
+            "etat_paiements.etat_reglement",
+            "fournisseurs.raison_social"
         )
         ->join("etat_paiements", "achats.id", "=", "etat_paiements.achat_id")
-        ->get();
+        ->join("fournisseurs", "fournisseurs.id", "=", "achats.fournisseur_id")
+        ->paginate($numPages);
+        
+        // apply all filters
+        $etatPaiements = $etatPaiements->filter(function ($value) use ($request) {
+            return $value;
+        });
 
-        // dd($etatPaiements);
+        $etatPaiements = $etatPaiements->filter(function ($value) use ($request) {
+            if ($request["filtrer"] == "regle") {
+                return $value["rest_regle"] == 0;
+            }
+            return $value;
+        });
+
+        $etatPaiements = $etatPaiements->filter(function ($value) use ($request) {
+            if ($request["filtrer"] == "non_regle") {
+                return $value["rest_regle"] > 0 ;
+            }
+            return $value;
+        });
+
+        $etatPaiements = $etatPaiements->filter(function ($value) use ($request) {
+            if ($request["fournisseur"] != null) {
+                return $value["raison_social"] == $request["fournisseur"];
+            }
+            return $value;
+        });
+
+        $total;
+        if ($request["filtrer"] == "non_regle" || $request["filtrer"] == "tous") {
+            $total = $etatPaiements->sum("rest_regle");
+        } else {
+            $total = $etatPaiements->sum("montant_regle");
+        }
 
         return view("paiement_achats.index", [
-            "etatPaiements" => $etatPaiements
+            "etatPaiements" => $etatPaiements,
+            "entres" => $numPages,
+            "filtrer" => $request["filtrer"] != null ? $request["filtrer"] : "tous",
+            "fournisseur" => $request["fournisseur"] != null ? $request["fournisseur"] : "",
+            "total" => $total
         ]);
     }
 

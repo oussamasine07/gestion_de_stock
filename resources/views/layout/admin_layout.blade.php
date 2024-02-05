@@ -156,7 +156,27 @@
             {{-- change the links for categories --}}
             <li class="pc-item"><a class="pc-link" href="/achats">Tous les achats</a></li>
             <li class="pc-item"><a class="pc-link" href="/achats/create">Nouvelle facture</a></li>
+            <li class="pc-item"><a class="pc-link" href="/livraisons">Livraisons</a></li>
             <li class="pc-item"><a class="pc-link" href="/paiement_achats">Etat de Paiement Achats</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Stocks</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/stocks">Tous les stocks</a></li>
+            <li class="pc-item"><a class="pc-link" href="/stocks/create">Nouvelle stock</a></li>
           </ul>
         </li>
         

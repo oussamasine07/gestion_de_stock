@@ -29,47 +29,59 @@
                 <div class="card-body">
                     <div class="table-responsive dt-responsive">
                         <div id="dom-jqry_wrapper" class="dataTables_wrapper dt-bootstrap5">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="dataTables_length" id="dom-jqry_length">
-                                        <label>
-                                            Show entries
-                                            <select name="dom-jqry_length" aria-controls="dom-jqry" class="form-select form-select-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> 
-                                        </label>
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="dataTables_length" id="dom-jqry_length">
+                                            <label>
+                                                nombre d'entrées
+                                                <select name="entres" aria-controls="dom-jqry" class="form-select form-select-sm">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select> 
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div class="dataTables_length" id="dom-jqry_length">
-                                        <label>
-                                            filters :
-                                            <select name="dom-jqry_length" aria-controls="dom-jqry" class="form-select form-select-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select> 
-                                        </label>
+    
+                                    <div class="col-sm-12 col-md-4">
+                                        <div class="dataTables_length" id="dom-jqry_length">
+                                            <label>
+                                                Filtrer par :
+                                                <select name="filtrer" aria-controls="dom-jqry" class="form-select form-select-sm">
+                                                    <option value="tous">Tous</option>
+                                                    <option value="non_regle">Les Factures Non Reglés</option>
+                                                    <option value="regle">Les Factures Reglés</option>
+                                                </select> 
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <div id="dom-jqry_filter" class="dataTables_filter">
-                                        <label>
-                                            Search: <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dom-jqry">
-                                        </label>
+    
+                                    <div class="col-sm-12 col-md-4">
+                                        <div id="dom-jqry_filter" class="dataTables_filter">
+                                            <label>
+                                                Recherche Par Fournisseur: 
+                                                <input type="text" name="fournisseur" value="{{ $fournisseur }}" class="form-control form-control-sm" placeholder="" aria-controls="dom-jqry">
+                                                
+                                            </label>
+                                        </div>
                                     </div>
+
+                                    <div class="col-sm-12 col-md-12 mb-2 text-center">
+                                        <button type="submit" class="btn btn-block btn-success btn-sm mt-2">Rechercher</button>
+                                    </div>
+                                    
                                 </div>
-                            </div>
+                            </form>
+
                             <div class="row dt-row">
                                 <div class="col-sm-12">
                                     <table id="dom-jqry" class="table table-striped table-bordered nowrap dataTable"
                                         aria-describedby="dom-jqry_info">
                                         <thead>
                                             <tr>
+                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Fournisseur</th>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Numero de Facture</th>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Date de Facture</th>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Total Facture</th>
@@ -82,12 +94,18 @@
                                         <tbody>
                                             
                                             @foreach ($etatPaiements as $etatPaiement)
-                                                <x-etat_paiement_table_row :etatPaiement=$etatPaiement />
+                                                <x-etat_paiement_table_row 
+                                                    :entres="$entres" 
+                                                    :filtrer="$filtrer" 
+                                                    :fournisseur="$fournisseur" 
+                                                    :etatPaiement=$etatPaiement 
+                                                />
                                             @endforeach
                                             
                                         </tbody>
                                         <tfoot>
                                             <tr>
+                                                <th rowspan="1" colspan="1">Fournisseur</th>
                                                 <th rowspan="1" colspan="1">Numero de Facture</th>
                                                 <th rowspan="1" colspan="1">date de facture</th>
                                                 <th rowspan="1" colspan="1">Total Facture</th>
@@ -100,6 +118,25 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="row dt-row">
+                                <div class="col-sm-6">
+                                    <table id="dom-jqry" class="table table-striped table-bordered nowrap dataTable"
+                                        aria-describedby="dom-jqry_info">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h3> Total</h3>
+                                                </td>
+                                                <td>
+                                                    <h3>{{ $total }} </h3>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
                                     <div class="dataTables_info" id="dom-jqry_info" role="status" aria-live="polite">
@@ -125,6 +162,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

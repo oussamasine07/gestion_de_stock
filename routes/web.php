@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AchatController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SocieteController;
+use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\AchatPaiementController;
 
@@ -78,4 +80,32 @@ Route::prefix("paiement_achats")->group(function () {
     Route::get("/create/{id}", [AchatPaiementController::class, "createPaiement"]);
     Route::post("/pay/{id}", [AchatPaiementController::class, "makePayment"]);
     
+});
+
+// delivery routes
+Route::prefix("livraisons")->group(function () {
+    Route::get("/", [LivraisonController::class, "index"]);
+    
+    // create routes
+    // create a new delivery
+    Route::get("/create/{id}", [LivraisonController::class, "create"]);
+    Route::get("/create_article/{id}", [LivraisonController::class, "createDelivery"]);
+    
+});
+
+// stock routes
+Route::prefix("stocks")->group(function () {
+    // get all stocks
+    Route::get("/", [StockController::class, "index"]);
+
+    //create a new stock
+    Route::get("/create", [StockController::class, "create"]);
+    Route::post("/", [StockController::class, "store"]);
+
+    // update routes
+    Route::get("/edit/{id}", [StockController::class, "edit"]);
+    Route::put("/update/{id}", [StockController::class, "update"]);
+    
+    // delete routes
+    Route::delete("/delete/{id}", [StockController::class, "destroy"]);
 });

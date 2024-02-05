@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Societe;
 use App\Models\Paiement;
+use App\Models\Livraison;
 use App\Models\ArticleAchat;
 use App\Models\EtatPaiement;
 use Illuminate\Database\Eloquent\Model;
@@ -40,5 +41,10 @@ class Achat extends Model
     public function etatPaiment () 
     {
         return $this->hasOne(EtatPaiement::class);
+    }
+
+    public function livraisons () 
+    {
+        return $this->hasMany(Livraison::class);
     }
 }

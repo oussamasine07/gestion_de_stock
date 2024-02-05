@@ -39,4 +39,9 @@ class Societe extends Model
     {
         return $this->hasMany(Achat::class);
     }
+
+    public function stocks ()
+    {
+        return $this->hasMany(Stock::class);
+    }
 }

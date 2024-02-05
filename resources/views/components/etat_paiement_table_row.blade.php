@@ -1,6 +1,11 @@
 
 <tr class="odd">
     <td class="sorting_1">
+        <a href="/paiement_achats?entres={{ $entres }}&filtrer={{ $filtrer }}&fournisseur={{ $etatPaiement->raison_social }}">
+            {{ $etatPaiement->raison_social }}
+        </a>
+    </td>
+    <td class="sorting_1">
         <a href="/paiement_achats/detail_de_paiement/{{ $etatPaiement->id }}">
             {{ $etatPaiement->numero_facture }}
         </a>
@@ -20,12 +25,13 @@
                     <i class="ti ti-eye f-18"></i>
                 </a>
             </li>
-            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
-                title="Régler Cette Facture">
-                <a href="/paiement_achats/create/{{ $etatPaiement->id }}" class="btn btn-primary">
-                    Regler
-                </a>
-            </li>
+            @if ($etatPaiement->rest_regle > 0)
+                <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Régler Cette Facture">
+                    <a href="/paiement_achats/create/{{ $etatPaiement->id }}" class="btn btn-primary btn-sm">
+                        Regler
+                    </a>
+                </li>
+            @endif
         </ul>
     </td>
 </tr>
