@@ -8,12 +8,12 @@
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../navigation/index.html">Acceil</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0)">Stocks</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Cree Un Nouvau Stock</li>
+                        <li class="breadcrumb-item" aria-current="page">Cree Un Nouveau Stock</li>
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h2 class="mb-0"> Nouvau Stock </h2>
+                        <h2 class="mb-0"> Nouveau Stock </h2>
                     </div>
                 </div>
             </div>

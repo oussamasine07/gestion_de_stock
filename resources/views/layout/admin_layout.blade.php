@@ -176,7 +176,7 @@
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
             <li class="pc-item"><a class="pc-link" href="/stocks">Tous les stocks</a></li>
-            <li class="pc-item"><a class="pc-link" href="/stocks/create">Nouvelle stock</a></li>
+            <li class="pc-item"><a class="pc-link" href="/stocks/create">Nouveau stock</a></li>
           </ul>
         </li>
         
