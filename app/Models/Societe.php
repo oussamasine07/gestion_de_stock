@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use App\Models\Achat;
+use App\Models\Client;
+use App\Models\Produit;
+use App\Models\Categorie;
+use App\Models\Livraison;
 use App\Models\Fournisseur;
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
@@ -40,8 +44,28 @@ class Societe extends Model
         return $this->hasMany(Achat::class);
     }
 
+    public function categories () 
+    {
+        return $this->hasMany(Categorie::class);
+    }
+
+    public function produits ()
+    {
+        return $this->hasMany(Produit::class);
+    }
+
+    public function livraisons ()
+    {
+        return $this->hasMany(Livraison::class);
+    }
+
     public function stocks ()
     {
         return $this->hasMany(Stock::class);
+    }
+
+    public function clients ()
+    {
+        return $this->hasMany(Client::class);
     }
 }

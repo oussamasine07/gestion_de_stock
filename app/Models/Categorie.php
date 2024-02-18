@@ -3,32 +3,27 @@
 namespace App\Models;
 
 use App\Models\Produit;
-use App\Models\EtatQuantiteStock;
+use App\Models\Societe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Stock extends Model
+class Categorie extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         "societe_id",
-        "nom",
-        "address",
-        "ville"
+        "nom_categorie",
+        "icon"
     ];
-
-    public function societe ()
-    {
-        return $this->belongsTo();
-    }
 
     public function produits ()
     {
         return $this->hasMany(Produit::class);
     }
 
-    public function etatQuantiteStock ()
+    public function societe ()
     {
-        return $this->hasMany(EtatQuantiteStock::class);
+        return $this->belongsTo(Societe::class);
     }
 }

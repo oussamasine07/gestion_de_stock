@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livraisons', function (Blueprint $table) {
+        Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("achat_id")->constrained();
             $table->foreignId("societe_id")->constrained();
-            $table->string("numero_bl");
-            $table->date("date_arrive_bl");
-            $table->decimal("total_bl", 10, 2)->default(0)->nullable();
-            $table->string("etat_livraison")->nullable();
+            // $table->foreignId("stock_id")->constrained();
+            $table->foreignId("categorie_id")->constrained();
+            $table->string("nom_produit");
+            $table->longText("description");
+            $table->string("images")->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livraisons');
+        Schema::dropIfExists('produits');
     }
 };

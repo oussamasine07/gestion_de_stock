@@ -9,11 +9,12 @@
                         <li class="breadcrumb-item"><a href="../navigation/index.html">Acceil</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0)">Bon De Livraison</a></li>
                         <li class="breadcrumb-item" aria-current="page">List des Bon De Livraison</li>
+                        <li class="breadcrumb-item" aria-current="page">List des Bon De Livraison Details</li>
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h2 class="mb-0">List des Bon De Livraison</h2>
+                        <h2 class="mb-0">List des Bon De Livraison Details</h2>
                     </div>
                 </div>
             </div>
@@ -27,26 +28,23 @@
         <div class="col-sm-12">
             <div class="card table-card">
                 <div class="card-body">
-                    <div class="text-end p-4 pb-0">
-                        <a href="/livraisons/create" class="btn btn-primary">
-                            <i class="ti ti-plus f-18"></i> Ajouter Un BL
-                        </a>
-                    </div>
+                    
                     <div class="table-responsive">
                         <table class="table table-hover" id="pc-dt-simple">
                             <thead>
                                 <tr>
-                                    <th class="text-center">#</th>
-                                    <th>Numero De BL</th>
-                                    {{-- <th>Numero De Facture</th> --}}
-                                    <th>Date D'arrivé</th>
-                                    <th>Total BL</th>
+                                    <th>Article</th>
+                                    <th>Prix Unitaire</th>
+                                    <th>Quantité</th>
+                                    <th>Montant total</th>
+                                    <th>Montant TVA</th>
+                                    <th>Montant TTC</th>
                                     <th class="text-center">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($livraisons as $livraison)
-                                    <x-livraison_table_row :livraison=$livraison />
+                                @foreach ($articles as $article)
+                                    <x-livraison_show_table_row :article=$article />
                                 @endforeach
                             </tbody>
                         </table>

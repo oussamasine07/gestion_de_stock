@@ -184,6 +184,101 @@
           <a href="#!" class="pc-link">
             <span class="pc-micon">
               <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Produits</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/produits">Tous les produits</a></li>
+            <li class="pc-item"><a class="pc-link" href="/produits/create">Nouveau produit</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Categories</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/categories">Tous les categories</a></li>
+            <li class="pc-item"><a class="pc-link" href="/categories/create">Nouveau categorie</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Clients</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/clients">Tous les Clients</a></li>
+            <li class="pc-item"><a class="pc-link" href="/clients/create">Nouveau Client</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Commandes</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/commandes">Tous les Commandes</a></li>
+            <li class="pc-item"><a class="pc-link" href="/commandes/create">Nouveau Commandes</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-shopping-bag"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Ventes</span>
+            <span class="pc-arrow">
+              <i data-feather="chevron-right"></i>
+            </span>
+          </a>
+          <ul class="pc-submenu">
+            {{-- change the links for categories --}}
+            <li class="pc-item"><a class="pc-link" href="/ventes">Tous les Ventes</a></li>
+            <li class="pc-item"><a class="pc-link" href="/ventes/create">Nouveau Ventes</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
                 <use xlink:href="#custom-user-square"></use>
               </svg>
             </span>

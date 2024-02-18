@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livraisons', function (Blueprint $table) {
-            $table->id();
+        Schema::create('etat_livraisons', function (Blueprint $table) {
             $table->foreignId("achat_id")->constrained();
-            $table->foreignId("societe_id")->constrained();
-            $table->string("numero_bl");
-            $table->date("date_arrive_bl");
-            $table->decimal("total_bl", 10, 2)->default(0)->nullable();
-            $table->string("etat_livraison")->nullable();
+            $table->decimal("total_facture")->nullable()->default(0);
+            $table->decimal("montant_livre")->nullable()->default(0);
+            $table->decimal("rest_non_livre")->nullable()->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livraisons');
+        Schema::dropIfExists('etat_livraisons');
     }
 };

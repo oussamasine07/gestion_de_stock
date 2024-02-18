@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AchatController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\VenteController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\SocieteController;
+use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\AchatPaiementController;
@@ -84,13 +89,74 @@ Route::prefix("paiement_achats")->group(function () {
 
 // delivery routes
 Route::prefix("livraisons")->group(function () {
+
     Route::get("/", [LivraisonController::class, "index"]);
+    Route::get("/show/{id}", [LivraisonController::class, "show"]);
     
     // create routes
     // create a new delivery
     Route::get("/create/{id}", [LivraisonController::class, "create"]);
-    Route::get("/create_article/{id}", [LivraisonController::class, "createDelivery"]);
+    Route::get("/create_article", [LivraisonController::class, "createDelivery"]);
+
+    // store routes
+    Route::post("/store_delivery/{id}", [LivraisonController::class, "store"]);
+    Route::post("/store_delivery_article/{id}", [LivraisonController::class, "storeDeliveryArticle"]);
+    Route::post("/end_articale", [LivraisonController::class, "endArticle"]);
     
+});
+
+Route::prefix("categories")->group(function () {
+
+    Route::get("/", [CategorieController::class, "index"]);
+
+    Route::get("/create", [CategorieController::class, "create"]);
+    Route::post("/", [CategorieController::class, "store"]);
+    
+    Route::get("/edit/{id}", [CategorieController::class, "edit"]);
+    Route::put("/update/{id}", [CategorieController::class, "update"]);
+
+    Route::delete("/delete/{id}", [CategorieController::class, "destroy"]);
+});
+
+// products routes
+Route::prefix("produits")->group(function () {
+
+    Route::get("/", [ProduitController::class, "index"]);
+    Route::get("/show/{id}", [ProduitController::class, "show"]);
+    
+    // ********************************************************
+    // all create methods here
+    // ********************************************************
+    Route::get("/create", [ProduitController::class, "create"]);
+    Route::post("/", [ProduitController::class, "store"]);
+
+    Route::get("/create_prix", [ProduitController::class, "createPrix"]);
+    Route::post("/prix", [ProduitController::class, "storePrix"]);
+
+    Route::get("/create_quantite", [ProduitController::class, "createQuantite"]);
+    Route::post("/quantite", [ProduitController::class, "storeQuantite"]);
+
+    // ********************************************************
+    // all edit and update methods here
+    // ********************************************************
+    Route::get("/edit/{id}", [ProduitController::class, "edit"]);
+    Route::put("/update/{id}", [ProduitController::class, "update"]);
+
+    Route::get("/etat_stock_quantite/edit/{id}", [ProduitController::class, "editQuantite"]);
+    Route::post("/add_quantite/{id}", [ProduitController::class, "addStockQuantite"]);
+    Route::put("/etat_stock_quantite/update/{id}", [ProduitController::class, "updateQuantite"]);
+
+    Route::get("/prix/edit/{id}", [ProduitController::class, "editPrix"]);
+    Route::put("/prix/update/{id}", [ProduitController::class, "updatePrix"]);
+
+
+    // ********************************************************
+    // all delete methods here
+    // ********************************************************
+    Route::delete("/etat_stock_quantite/delete/{id}", [ProduitController::class, "destroyQnantite"]);
+    
+    // end the session of creating a new product
+    Route::post("/end", [ProduitController::class, "end"]);
 });
 
 // stock routes
@@ -108,4 +174,47 @@ Route::prefix("stocks")->group(function () {
     
     // delete routes
     Route::delete("/delete/{id}", [StockController::class, "destroy"]);
+});
+
+// clients routes
+Route::prefix("/clients")->group(function () {
+    // get all clients
+    Route::get("/", [ClientController::class, "index"]);
+
+    // ********************************************************
+    // all create methods here
+    // ********************************************************
+    Route::get("/create", [ClientController::class, "create"]);
+    Route::post("/", [ClientController::class, "store"]);
+
+    Route::get("/create_info_ste", [ClientController::class, "createSteInfo"]);
+    Route::post("/store_info_ste", [ClientController::class, "storeSteInfo"]);
+
+    Route::get("/create_info_pp", [ClientController::class, "createPPInfo"]);
+    Route::post("/store_info_pp", [ClientController::class, "storePPInfo"]);
+
+    // ********************************************************
+    // all update methods here
+    // ********************************************************
+    Route::get("/edit/{id}", [ClientController::class, "edit"]);
+    Route::put("/update/{id}", [ClientController::class, "update"]);
+
+    Route::get("/edit_ste_info", [ClientController::class, "editSteInfo"]);
+    Route::post("/update_ste_info", [ClientController::class, "updateSteInfo"]);
+
+    Route::get("/edit_pp_info", [ClientController::class, "editPPInfo"]);
+    Route::post("/update_pp_info", [ClientController::class, "updatePPInfo"]);
+
+    Route::delete("/delete/{id}", [ClientController::class, "destroy"]);
+});
+
+// order routes 
+Route::prefix("/commandes")->group(function () {
+    Route::get("/", [CommandeController::class, "index"]);
+});
+
+// ventes routes
+Route::prefix("/ventes")->group(function () {
+    // get all Sells
+    Route::get("/", [VenteController::class, "index"]);
 });

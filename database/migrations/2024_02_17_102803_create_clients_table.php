@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livraisons', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("achat_id")->constrained();
             $table->foreignId("societe_id")->constrained();
-            $table->string("numero_bl");
-            $table->date("date_arrive_bl");
-            $table->decimal("total_bl", 10, 2)->default(0)->nullable();
-            $table->string("etat_livraison")->nullable();
+            $table->string("nom_ou_raison_social");
+            $table->string("email");
+            $table->string("telephone");
+            $table->string("address");
+            $table->string("ville");
+            $table->string("code_postal");
+            $table->string("statu_social");
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livraisons');
+        Schema::dropIfExists('clients');
     }
 };
