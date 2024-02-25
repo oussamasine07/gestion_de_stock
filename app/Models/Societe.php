@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Achat;
+use App\Models\Vente;
 use App\Models\Client;
 use App\Models\Produit;
+use App\Models\Commande;
 use App\Models\Categorie;
 use App\Models\Livraison;
 use App\Models\Fournisseur;
@@ -67,5 +69,15 @@ class Societe extends Model
     public function clients ()
     {
         return $this->hasMany(Client::class);
+    }
+
+    public function commandes ()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    public function ventes ()
+    {
+        return $this->hasMany(Vente::class);
     }
 }

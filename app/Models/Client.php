@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Vente;
 use App\Models\InfoPp;
 use App\Models\InfoSte;
 use App\Models\Societe;
+use App\Models\Commande;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -36,5 +38,15 @@ class Client extends Model
     public function intoPp () 
     {
         return $this->hasOne(InfoPp::class);
+    }
+
+    public function commandes ()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    public function ventes ()
+    {
+        return $this->hasMany(Vente::class);
     }
 }

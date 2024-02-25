@@ -21,4 +21,41 @@
     </div>
     <!-- [ breadcrumb ] end -->
 
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+            <div class="card table-card">
+                <div class="card-body">
+                    <div class="text-end p-4 pb-0">
+                        <a href="/clients/create" class="btn btn-primary">
+                            <i class="ti ti-plus f-18"></i> Ajouter Un Client
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="pc-dt-simple">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Client</th>
+                                    <th class="text-center">Code de Commande</th>
+                                    <th class="text-center">Date de Commande</th>
+                                    <th class="text-center">Montant total ttc</th>
+                                    <th class="text-center">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($commandes as $commande)
+                                    <x-commande_table_row :commande=$commande />
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ sample-page ] end -->
+    </div>
+    <!-- [ Main Content ] end -->
+
 @endsection

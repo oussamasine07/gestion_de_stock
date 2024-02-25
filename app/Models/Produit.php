@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Societe;
 use App\Models\PrixProduit;
 use App\Models\EtatQuantite;
+use App\Models\ProduitsCommande;
 use App\Models\EtatQuantiteStock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,5 +45,10 @@ class Produit extends Model
     public function prixes ()
     {
         return $this->hasMany(PrixProduit::class);
+    }
+
+    public function produitCommandes ()
+    {
+        return $this->hasMany(ProduitsCommande::class);
     }
 }

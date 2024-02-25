@@ -11,19 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commandes', function (Blueprint $table) {
+        Schema::create('produits_commandes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("societe_id")
+            $table->foreignId("commande_id")
                         ->constrained()
                         ->onUpdate("cascade")
                         ->onDelete("cascade");
-            $table->foreignId("client_id")
+            $table->foreignId("produit_id")
                         ->constrained()
                         ->onUpdate("cascade")
                         ->onDelete("cascade");
-            $table->string("code_commande");
-            $table->date("date_commande");
-            $table->decimal("montant_total_ttc", 10, 2)->default(0)->nullable();
+            $table->decimal("prix_unitaire", 10, 2);
+            $table->integer("quantite");
+            $table->decimal("montant_total", 10, 2)->default(0)->nullable();
+            $table->decimal("pourcentage_tva", 3, 2);
+            $table->decimal("montant_tva", 10, 2)->default(0)->nullable();
+            $table->decimal("montant_ttc", 10, 2)->default(0)->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commandes');
+        Schema::dropIfExists('produits_commandes');
     }
 };

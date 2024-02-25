@@ -211,10 +211,31 @@ Route::prefix("/clients")->group(function () {
 // order routes 
 Route::prefix("/commandes")->group(function () {
     Route::get("/", [CommandeController::class, "index"]);
+    Route::get("/show/{id}", [CommandeController::class, "show"]);
+
+    // ********************************************************
+    // all create methods here
+    // ********************************************************
+    Route::get("/create", [CommandeController::class, "create"]);
+    Route::post("/", [CommandeController::class, "store"]);
+
+    Route::get("/create_commande_produit/{id}", [CommandeController::class, "createCommandeProduit"]);
+    Route::post("/store_commande_produit", [CommandeController::class, "storeCommanedeProduit"]);
+    //  search a product
+    Route::post("/chercher/{id}", [CommandeController::class, "searchProduit"]);
+
+    Route::get("/edit/{id}", [CommandeController::class, "edit"]);
+    Route::put("/update/{id}", [CommandeController::class, "update"]);
+    Route::get("/edit_produit_commande/{id}", [CommandeController::class, "editCommandeProduit"]);
+    Route::put("/update_commande_produit/{id}", [CommandeController::class, "updateCommandeProduit"]);
+
+    Route::post("/end_article", [CommandeController::class, "endArticle"]);
 });
 
 // ventes routes
 Route::prefix("/ventes")->group(function () {
     // get all Sells
     Route::get("/", [VenteController::class, "index"]);
+    Route::post("/", [VenteController::class, "store"]);
+    Route::get("/show/{id}", [VenteController::class, "show"]);
 });

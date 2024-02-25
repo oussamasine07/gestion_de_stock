@@ -1,0 +1,181 @@
+/*!
+ * HTML-Sheets-of-Paper (https://github.com/delight-im/HTML-Sheets-of-Paper)
+ * Copyright (c) delight.im (https://www.delight.im/)
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
+@import "sheets-of-paper.css";
+.page_container {
+	background-color: rgb(186, 201, 219);
+	padding: 20px;
+}
+.page {
+	width: 21cm;
+	min-height: 29.7cm;
+	padding-left: 1cm;
+	padding-top: 1cm;
+	padding-right: 1cm;
+	padding-bottom: 1cm;
+	position: relative;
+}
+
+.page .logo-wrapper {
+	padding: 5px;
+	width: 100%;
+	min-height: 150px;
+}
+
+.page .logo-wrapper .logo {
+	border: 1px solid blue;
+	width: 150px;
+	height: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.client-wrapper {
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.client-wrapper.left {
+	justify-content: flex-end;
+}
+
+.client-details {
+	width: 45%;
+	padding: 10px 15px;
+	background: #f3f5f7;
+	border: 1px solid #cdcecf;
+	border-radius: 10px;
+}
+
+.client-details .client-row {
+	display: flex;
+	margin-bottom: 5px;
+}
+
+.client-details .client-row .column-side {
+	flex: 1;
+	font-weight: bold;
+
+}
+
+.client-details .client-row .column-sm {
+	flex: 1;
+}
+
+.client-details .client-row .column-main {
+	flex: 3;
+	margin-left: 5px;
+}
+/* table main color  #4680ff */
+.invoice-table-wrapper {
+	/* border: 1px solid black; */
+}
+
+.invoice-table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #2359ce;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.invoice-table thead {
+	border: 1px solid #2359ce;
+	background-color: #2359ce;
+	color: #fff;
+}
+
+.invoice-table thead tr th {
+	padding: 8px 10px;
+}
+
+.invoice-table tbody tr td {
+	padding: 5px 10px;
+	text-align: right;
+	border-left: 1px solid #2359ce;
+}
+
+.invoice-table tbody tr:nth-child(even) {
+	background: #f3f5f7;
+	border: 1px solid #cdcecf;
+}
+
+.invoice-table tbody tr:last-child {
+	border-bottom: 5px solid #2359ce;
+}
+
+.invoice-totals {
+	display: flex;
+	justify-content: space-between;
+}
+
+.payment-details, .totals {
+	/* border: 1px solid black; */
+	width: 50%;
+}
+
+.totals table {
+	width: 100%;
+	border: 1px solid #2359ce;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.totals table thead, 
+.totals table .total-row {
+	background: #2359ce;
+	color: #fff;
+}
+
+.totals table thead tr th {
+	padding: 6px;
+	text-align: center;
+}
+
+.totals table tbody tr td {
+	padding: 4px;
+	border-left: 1px solid #2359ce;
+	text-align: right;
+}
+
+.totals table tbody tr td:nth-child(2) {
+	text-align: center;
+}
+
+.totals table tbody tr:nth-child(even) {
+	background: #f3f5f7;
+	border: 1px solid #cdcecf;	
+}
+
+.invoice-footer {
+	position: absolute;
+	bottom: 0cm;
+	left: 1cm;
+	right: 1cm;
+	text-align: center;
+}
+
+.invoice-footer .line {
+	width: 50%;
+	height: 3px;
+	background-color: blue;
+	margin: 0 auto 20px;
+}
+
+@page {
+	/* You can only change the size, margins, orphans, widows and page breaks here */
+
+	/* Paper size and page orientation */
+	size: A4 portrait;
+
+	/* Margin per single side of the page */
+	margin-left: 2cm;
+	margin-top: 2cm;
+	margin-right: 2cm;
+	margin-bottom: 2cm;
+}

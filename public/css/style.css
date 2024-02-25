@@ -7,6 +7,8 @@ Support: https://phoenixcoded.authordesk.app
 File: style.css
 =========================================================================
 =================================================================================== */
+@import "sheets-of-paper-a4.css";
+
 :root {
   --bs-body-bg: #fff;
   --bs-body-bg-rgb: 255, 255, 255;

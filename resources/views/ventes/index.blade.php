@@ -38,14 +38,16 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th>Numero De Facture</th>
-                                    <th>Client</th>
-                                    <th>Date Facture</th>
-                                    <th>Total Facture</th>
+                                    <th class="text-center">Client</th>
+                                    <th class="text-center">Date Facture</th>
+                                    <th class="text-center">Total Facture</th>
                                     <th class="text-center">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach ($articles as $article)
+                                    <x-vente_table_row :article=$article />
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
