@@ -152,6 +152,10 @@
 	border: 1px solid #cdcecf;	
 }
 
+.totals table tbody tr.total-row {
+	background-color: #2359ce;
+}
+
 .invoice-footer {
 	position: absolute;
 	bottom: 0cm;

@@ -9,10 +9,11 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\SocieteController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\FournisseurController;
-use App\Http\Controllers\AchatPaiementController;
+use App\Http\Controllers\LivraisonVentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,13 +78,13 @@ Route::prefix("achats")->group(function () {
 });
 
 // payment invoices state routes
-Route::prefix("paiement_achats")->group(function () {
-    Route::get("/", [AchatPaiementController::class, "index"]);
-    Route::get("/detail_de_paiement/{id}", [AchatPaiementController::class, "showFactureDetails"]);
+Route::prefix("paiements")->group(function () {
+    Route::get("/", [PaiementController::class, "index"]);
+    Route::get("/detail_de_paiement/{id}", [PaiementController::class, "showFactureDetails"]);
 
     // make paiement functionality
-    Route::get("/create/{id}", [AchatPaiementController::class, "createPaiement"]);
-    Route::post("/pay/{id}", [AchatPaiementController::class, "makePayment"]);
+    Route::get("/create/{id}", [PaiementController::class, "createPaiement"]);
+    Route::post("/pay/{id}", [PaiementController::class, "makePayment"]);
     
 });
 
@@ -238,4 +239,11 @@ Route::prefix("/ventes")->group(function () {
     Route::get("/", [VenteController::class, "index"]);
     Route::post("/", [VenteController::class, "store"]);
     Route::get("/show/{id}", [VenteController::class, "show"]);
+    Route::get("/create", [VenteController::class, "create"]);
+});
+
+// livraison de ventes
+Route::prefix("/livraison_ventes")->group(function () {
+    Route::get("/", [LivraisonVentsController::class, "index"]);
+    Route::get("/create/{id}", [LivraisonVentsController::class, "create"]);
 });

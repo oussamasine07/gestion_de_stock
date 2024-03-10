@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('produits_livres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("achat_id")->constrained();
             $table->foreignId("livraison_id")->constrained();
+            $table->integer("produitLiverable_id");
+            $table->string("produitLiverable_type");
             $table->string("nom_article");
             $table->integer("quantite");
             $table->decimal("prix_unitaire", 10, 2)->nullable();

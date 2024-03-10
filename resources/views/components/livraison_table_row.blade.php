@@ -34,7 +34,7 @@
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="ajoute">
-                <a href="/livraisons/create_article?achat_id={{ $livraison->achat_id }}&livraison={{ $livraison->id }}" class="btn btn-primary btn-sm">
+                <a href="/livraisons/create_article?liverable_id={{ $livraison->liverable_id }}&livraison={{ $livraison->id }}&etat_livraison={{ $livraison->etat_livraison }}" class="btn btn-primary btn-sm">
                     ajoute article
                 </a>
             </li>

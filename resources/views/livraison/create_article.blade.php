@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/livraisons/store_delivery_article/{{ $livraison->achat_id }}" method="POST">
+                    <form action="/livraisons/store_delivery_article/{{ $livraison->liverable_id }}?etat_livraison={{ $livraison->etat_livraison }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

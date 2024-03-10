@@ -13,10 +13,9 @@ return new class extends Migration
     {
         // ETAT DE REGLEMENT
         Schema::create('etat_paiements', function (Blueprint $table) {
-            $table->foreignId("achat_id")
-                        ->constrained()
-                        ->onUpdate("cascade")
-                        ->onDelete("cascade");
+            $table->id();
+            $table->integer("payable_id");
+            $table->string("payable_type");
             $table->decimal("total_facture", 10, 2)->default(0)->nullable();
             $table->decimal("montant_regle", 10, 2)->default(0)->nullable();
             $table->decimal("rest_regle", 10, 2)->default(0)->nullable();

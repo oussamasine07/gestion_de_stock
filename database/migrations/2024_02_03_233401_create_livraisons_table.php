@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('livraisons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("achat_id")->constrained();
             $table->foreignId("societe_id")->constrained();
+            $table->integer("liverable_id");
+            $table->string("liverable_type");
+            $table->string("liverable_state");
             $table->string("numero_bl");
             $table->date("date_arrive_bl");
             $table->decimal("total_bl", 10, 2)->default(0)->nullable();

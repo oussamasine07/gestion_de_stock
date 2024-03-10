@@ -22,4 +22,9 @@ class ProduitsLivre extends Model
     {
         return $this->belongsTo(Livrasion::class);
     }
+
+    public function produitLiverable ()
+    {
+        return $this->morphTo();
+    }
 }

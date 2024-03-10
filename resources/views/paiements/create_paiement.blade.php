@@ -7,13 +7,33 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../navigation/index.html">Acceil</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0)">Paiement Achats</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Effectuer Un Reglement</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0)">Paiement {{ $etat_paiement }}</a></li>
+                        @if ($etat_paiement == "achat")
+                            <li class="breadcrumb-item" aria-current="page">Effectuer Un Reglement</li> 
+                        @else
+                            <li class="breadcrumb-item" aria-current="page">Effectuer Un Encaissement</li>
+                        @endif
+                        
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h2 class="mb-0">Effectuer Un Reglement: Facture N° {{ $achat->numero_facture }} </h2>
+                        @if ($etat_paiement == "achat")
+                            <h2 class="mb-0">
+                                Effectuer Un Reglement: Facture N° 
+                                <span class="uppercase">
+                                    {{ $item->numero_facture }}
+                                </span> 
+                            </h2> 
+                        @else
+                            <h2 class="mb-0">
+                                Effectuer Un Encaissement: Facture N° 
+                                <span class="uppercase">
+                                    {{ $item->numero_facture }}
+                                </span>  
+                            </h2> 
+                        @endif
+                        
                     </div>
                 </div>
             </div>
@@ -28,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     
-                    <form action="/paiement_achats/pay/{{ $achat->id }}" method="POST">
+                    <form action="/paiements/pay/{{ $item->id }}?etat_paiement={{ $etat_paiement }}" method="POST">
                         @csrf 
                         <div class="row">
                             <div class="col-md-6">
@@ -96,7 +116,12 @@
                                 </div>
 
                                 <div class="text-end btn-page mb-0 mt-4">
-                                    <button type="submit" class="btn btn-primary">Regler</button>
+                                    @if ($etat_paiement == "achat")
+                                        <button type="submit" class="btn btn-primary">Regler</button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary">Encaisser</button>
+                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>

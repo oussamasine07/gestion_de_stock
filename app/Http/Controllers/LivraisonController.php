@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achat;
+use App\Models\Vente;
 use App\Models\Societe;
 use App\Models\Livraison;
 use App\Models\ArticleAchat;
+use App\Models\ArticleVente;
 use Illuminate\Http\Request;
 use App\Models\EtatLivraison;
 use App\Models\ProduitsLivre;
@@ -14,14 +16,18 @@ use App\Models\EtatProduitsLivre;
 class LivraisonController extends Controller
 {
     // show all delivery status
-    public function index () 
+    public function index (Request $request) 
     {   
         $id = auth()->user()->societe_id;
 
         $societe = Societe::find($id);
+        $livraisons = $societe->livraisons;
+
+        // filter only the achat livraison
+        $filtered = $livraisons->where("etat_livraison", $request->query("etat_livraison"));
 
         return view("livraison.index", [
-            "livraisons" => $societe->livraisons
+            "livraisons" => $filtered
         ]);
     }
 
@@ -42,10 +48,17 @@ class LivraisonController extends Controller
     // create a new delivery
     public function create (Request $request, string $id)
     {
-        $achat = Achat::find($id);
+        if ($request->query("etat_livraison") == "achat") {
+            $liverable = Achat::find($id);
+        }
+
+        if ($request->query("etat_livraison") == "vente") {
+            $liverable = Vente::find($id);
+        }
 
         return view("livraison.create", [
-            "achat" => $achat
+            "liverable" => $liverable,
+            "etat" => $request->query("etat_livraison")
         ]);
     }
 
@@ -58,45 +71,80 @@ class LivraisonController extends Controller
             "date_arrive_bl" => "required"
         ]);
 
-        $formFields["achat_id"] = $id;
+        $formFields["liverable_id"] = $id;
         $formFields["societe_id"] = auth()->user()->societe_id;
+        $formFields["etat_livraison"] = $request->query("etat_livraison");
 
-        $delivery = Livraison::create($formFields);
+        $newDelivery = new Livraison($formFields);
 
-        // create a session to store delivery info
-        session([
-            "livraion_details" => [
-                "id" => $delivery->id,
-                "numero_bl" => $delivery->numero_bl
-            ]
-        ]);
+        // dd($newDelivery);
 
-        return redirect("/livraisons/create_article?achat_id={$id}&livraison={$delivery->id}");
+        $liverable;
+        $delivery;
+        
+        if ($request->query("etat_livraison") == "achat") {
+            $liverable = Achat::find($id);
+            $delivery = $liverable->livraison()->save($newDelivery);
+
+            // create a session to store delivery info
+            session([
+                "livraison_details" => [
+                    "id" => $delivery->id,
+                    "numero_bl" => $delivery->numero_bl
+                ]
+            ]);
+
+            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}");
+        }
+        
+        if ($request->query("etat_livraison") == "vente") {
+            $liverable = Vente::find($id);
+            $delivery = $liverable->livraison()->save($newDelivery);
+
+            // create a session to store delivery info
+            session([
+                "livraison_details" => [
+                    "id" => $delivery->id,
+                    "numero_bl" => $delivery->numero_bl
+                ]
+            ]);
+
+            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}");
+        }
+
+        
 
     }
 
     // create a new delivery article
     public function createDelivery (Request $request) 
     {
+        $invoice = $request->query("etat_livraison") == "achat" 
+                        ? Achat::find($request->query("liverable_id"))
+                        : Vente::find($request->query("liverable_id"));
 
-        $achat = Achat::find($request->query("achat_id"));
+        $articles = $request->query("etat_livraison") == "achat" 
+                        ? $invoice->articleAchats
+                        : $invoice->articlesVentes;
+
         $livraison = Livraison::find($request->query("livraison"));
-
+        
         session([
-            "livraion_details" => [
+            "livraison_details" => [
                 "id" => $livraison->id,
                 "numero_bl" => $livraison->numero_bl
             ]
         ]);
 
-        if ($request->session()->exists("livraion_details")) {
+        if ($request->session()->exists("livraison_details")) {
             return view("livraison.create_article", [
-                "articles" => $achat->articaleAchats,
+                "articles" => $articles,
                 "livraison" => $livraison
             ]);
         } else {
             return redirect("/livraisons/create/{$request->query('achat_id')}");
         }
+        
     }
 
     // store delivery article
@@ -108,24 +156,34 @@ class LivraisonController extends Controller
             "quantite" => "required",
         ]);
 
-        $livraion_details = $request->session()->get("livraion_details");
-
+        $livraion_details = $request->session()->get("livraison_details");
+        
         // get the price from achat table
-        $article = ArticleAchat::where("achat_id", "=", $id)
+        $article = $request->query("etat_livraison") == "achat" 
+                            ? ArticleAchat::where("achat_id", "=", $id)
+                                ->where("nom_article", "=", $formFields["nom_article"])
+                                ->first()
+                            : ArticleVente::where("vente_id", "=", $id)
                                 ->where("nom_article", "=", $formFields["nom_article"])
                                 ->first();
 
+        $etat_livraison = $request->query("etat_livraison") == "achat" ? "App\Models\Achat" : "App\Models\Vente";
+        $etat_produit_livre = $request->query("etat_livraison") == "achat" ? "App\Models\Achat" : "App\Models\Vente";
+
         // get etat_livraison
-        $etatLivraison = EtatLivraison::where("achat_id", "=", $id)->first();
+        $etatLivraison = EtatLivraison::where("etat_liverable_id", "=", $id)
+                                            ->where("etat_liverable_type", "=", $etat_livraison)
+                                            ->first();
+        
         // get etat_produit_livre
-        $etatProduitLivres = EtatProduitsLivre::where("achat_id", "=", $id)
+        $etatProduitLivres = EtatProduitsLivre::where("etat_produit_liverable_id", "=", $id)
+                                                ->where("etat_produit_liverable_type", "=", $etat_produit_livre)
                                                 ->where("article", "=", $formFields["nom_article"])
                                                 ->first();
-
+        // dd($etatProduitLivres);
         // add the needed fildes
         $formFields["prix_unitaire"] = $article->prix_unitaire;
         $formFields["pourcentage_tva"] = $article->pourcentage_tva;
-        $formFields["achat_id"] = $id;
         $formFields["livraison_id"] = $livraion_details["id"];
         
         // calculate total price
@@ -133,23 +191,33 @@ class LivraisonController extends Controller
 
         // check if the total delivery >= rest of the etat_livraison
         if ($totalPrice > $etatLivraison->rest_non_livre) {
-            return redirect("/livraisons/create_article?achat_id={$id}&livraison={$livraion_details['id']}")
+            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}")
                     ->with("message", "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture");
         } else {
             // check if the total qty delivery is <= rest of the etat_produit_livraison
             if ($formFields["quantite"] > $etatProduitLivres->rest_quantite) {
-                return redirect("/livraisons/create_article?achat_id={$id}&livraison={$livraion_details['id']}")
+                return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}")
                         ->with("message", "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture");
             } else {
                 // store the delivered article here
-                ProduitsLivre::create($formFields);
-                return redirect("/livraisons/create_article?achat_id={$id}&livraison={$livraion_details['id']}")
+                $newArticle = new ProduitsLivre($formFields);
+                if ($request->query("etat_livraison") == "achat") {
+                    $achat = Achat::find($id);
+                    $achat->produitsLivres()->save($newArticle);
+                    
+                    return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}&etat_livraison={$request->query('etat_livraison')}")
                         ->with("message", "le produit " . $formFields["nom_article"] . " est ajouté");
+                }
+
+                if ($request->query("etat_livraison") == "vente") {
+                    $vente = Vente::find($id);
+                    $vente->produitsLivres()->save($newArticle);
+
+                    return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}&etat_livraison={$request->query('etat_livraison')}")
+                        ->with("message", "le produit " . $formFields["nom_article"] . " est ajouté");
+                }
             }
         }
-        
-
-
     }
 
 

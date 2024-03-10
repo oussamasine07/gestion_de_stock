@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('etat_produits_livres', function (Blueprint $table) {
-            $table->foreignId("achat_id")->constrained();
-            // $table->foreignId("livraison_id")->constrained();
+            $table->integer("etat_produit_liverable_id");
+            $table->string("etat_produit_liverable_type");
             $table->string("article")->nullable();
             $table->integer("total_quantite")->default(0)->nullable();
             $table->integer("quantite_livre")->default(0)->nullable();

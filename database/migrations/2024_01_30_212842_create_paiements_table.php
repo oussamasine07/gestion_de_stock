@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('paiements', function (Blueprint $table) {
-            $table->foreignId("achat_id")
-                        ->constrained()
-                        ->onUpdate("cascade")
-                        ->onDelete("cascade");
+            $table->id();
+            $table->integer("payable_id");
+            $table->string("payable_type");
             $table->date("date_reglement");
             $table->decimal("montant_regle", 10, 2);
             $table->string("mode_regelement");

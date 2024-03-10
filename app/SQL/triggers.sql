@@ -70,3 +70,80 @@ INSERT INTO etat_produits_livres
 	(achat_id, article, total_quantite, quantite_livre, rest_quantite)
 VALUES 
 	(NEW);
+
+DELIMITER $$
+CREATE TRIGGER calc_rest_non_livre_on_insert 
+AFTER INSERT ON produits_livres
+FOR EACH ROW
+BEGIN 
+	DECLARE produit_id integer;
+    DECLARE nom_art VARCHAR(255);
+    SET produit_id = NEW.id;
+    SET nom_art = produits_livres.nom_article;
+
+	UPDATE etat_livraisons
+    SET montant_livre = (
+    	SUM(produits_livres.montant_ttc)
+        FROM produits_livres
+        WHERE produits_livres.id
+        GROUP BY
+    )
+    WHERE etat_livraisons.montant_livre = 
+    
+END$$
+DELIMITER ;
+
+
+
+
+CREATE TRIGGER `calc_motant_total_produit_livre_on_insert` BEFORE INSERT ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_total = NEW.quantite * NEW.prix_unitaire;
+
+CREATE TRIGGER `calc_motant_total_produit_livre_on_update` BEFORE UPDATE ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_total = NEW.quantite * NEW.prix_unitaire;
+
+CREATE TRIGGER `calc_motant_ttc_produit_livre_on_insert` BEFORE INSERT ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_ttc = NEW.montant_total + NEW.montant_tva;
+
+CREATE TRIGGER `calc_motant_ttc_produit_livre_on_update` BEFORE UPDATE ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_ttc = NEW.montant_total + NEW.montant_tva;
+
+CREATE TRIGGER `calc_motant_tva_produit_livre_on_insert` BEFORE INSERT ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_tva = NEW.montant_total * NEW.pourcentage_tva;
+
+CREATE TRIGGER `calc_motant_tva_produit_livre_on_update` BEFORE UPDATE ON `produits_livres`
+ FOR EACH ROW SET NEW.montant_tva = NEW.montant_total * NEW.pourcentage_tva;
+
+
+BEGIN 
+	
+    DECLARE pr_id INTEGER;
+    DECLARE pr_type VARCHAR(255);
+    DECLARE article VARCHAR(255);
+    
+    SET pr_id = NEW.produitLiverable_id;
+    SET pr_type = NEW.produitLiverable_type;
+    SET article = NEW.nom_article;
+    
+ 	UPDATE etat_produits_livres 
+    SET etat_produits_livres.quantite_livre = (
+    	SELECT SUM(produits_livres.quantite)
+        FROM produits_livres
+        WHERE 
+        	produits_livres.produitLiverable_id = pr_id 
+        		AND 
+        	produits_livres.produitLiverable_type = produits_livres
+        		AND
+       		produits_livres.nom_article = article COLLATE utf8mb4_unicode_ci
+        GROUP BY
+        	produits_livres.produitLiverable_id,
+        	produits_livres.produitLiverable_type,
+        	produits_livres.nom_article
+    ) 
+    WHERE 
+    	etat_produits_livres.etat_produit_liverable_id = pr_id 
+        	AND 
+        etat_produits_livres.etat_produit_liverable_type = produits_livres
+        	AND
+       	etat_produits_livres.article = article COLLATE utf8mb4_unicode_ci;
+END

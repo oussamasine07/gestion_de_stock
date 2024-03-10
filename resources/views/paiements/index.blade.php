@@ -7,13 +7,13 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../navigation/index.html">Acceil</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0)">Paiement Achats</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0)">Paiement {{ $etat_paiement }}</a></li>
                         {{-- <li class="breadcrumb-item" aria-current="page">Etat de Paiement Achats</li> --}}
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h2 class="mb-0">Etat de Paiement Achats</h2>
+                        <h2 class="mb-0 capitalize">Etat de Paiement {{ $etat_paiement }}</h2>
                     </div>
                 </div>
             </div>
@@ -60,11 +60,19 @@
     
                                     <div class="col-sm-12 col-md-4">
                                         <div id="dom-jqry_filter" class="dataTables_filter">
-                                            <label>
-                                                Recherche Par Fournisseur: 
-                                                <input type="text" name="fournisseur" value="{{ $fournisseur }}" class="form-control form-control-sm" placeholder="" aria-controls="dom-jqry">
-                                                
-                                            </label>
+                                            <input type="text" name="etat_paiement" value="{{ $etat_paiement }}" hidden>
+                                            @if ($etat_paiement == "achats")
+                                                <label>
+                                                    Recherche Par Fournisseur: 
+                                                    <input type="text" name="fournisseur" value="{{ $fournisseur }}" class="form-control form-control-sm" placeholder="" aria-controls="dom-jqry">
+                                                </label> 
+                                            @else
+                                                <label>
+                                                    Recherche Par Client: 
+                                                    <input type="text" name="client" value="{{ $client }}" class="form-control form-control-sm" placeholder="" aria-controls="dom-jqry">
+                                                </label>
+                                            @endif
+                                            
                                         </div>
                                     </div>
 
@@ -81,7 +89,12 @@
                                         aria-describedby="dom-jqry_info">
                                         <thead>
                                             <tr>
-                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Fournisseur</th>
+                                                @if ($etat_paiement == "achats")
+                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Fournisseur</th>
+                                                @else
+                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Client</th>
+                                                @endif
+                                                
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Numero de Facture</th>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Date de Facture</th>
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="dom-jqry" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 196.219px;">Total Facture</th>
@@ -98,14 +111,19 @@
                                                     :entres="$entres" 
                                                     :filtrer="$filtrer" 
                                                     :fournisseur="$fournisseur" 
-                                                    :etatPaiement=$etatPaiement 
+                                                    :etatPaiement="$etatPaiement" 
+                                                    :etatpaiement="$etat_paiement"
                                                 />
                                             @endforeach
                                             
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th rowspan="1" colspan="1">Fournisseur</th>
+                                                @if ($etat_paiement == "achats")
+                                                    <th rowspan="1" colspan="1">Fournisseur</th>
+                                                @else
+                                                    <th rowspan="1" colspan="1">Client</th> 
+                                                @endif
                                                 <th rowspan="1" colspan="1">Numero de Facture</th>
                                                 <th rowspan="1" colspan="1">date de facture</th>
                                                 <th rowspan="1" colspan="1">Total Facture</th>

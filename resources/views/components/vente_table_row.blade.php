@@ -33,6 +33,16 @@
                     </button>
                 </form>
             </li>
+            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="livrer cette facture">
+                <a class="btn btn-primary btn-sm" href="/livraisons/create/{{ $article->id }}?etat_livraison=vente">
+                    livrer
+                </a>
+            </li>
+            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="cree un reglement pour cette facture">
+                <a class="btn btn-success btn-sm" href="/paiements/create/{{ $article->id }}?etat_paiement=vente">
+                    Encaisser
+                </a>
+            </li>
         </ul>
     </td>
 </tr>

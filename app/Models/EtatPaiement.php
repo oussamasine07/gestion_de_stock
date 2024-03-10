@@ -21,4 +21,9 @@ class EtatPaiement extends Model
     {
         return $this->belongsTo(Achat::class);
     }
+
+    public function payable()
+    {
+        return $this->morphTo();
+    }
 }

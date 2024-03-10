@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Achat;
 use App\Models\Societe;
+use App\Models\Livraison;
 use App\Models\ArticleAchat;
 use Illuminate\Http\Request;
+use App\Models\EtatLivraison;
 
 class AchatController extends Controller
 {
@@ -64,6 +66,14 @@ class AchatController extends Controller
 
         // store the form and create a new session that holds the id of the invoice
         $achat = Achat::create($formFields);
+        
+        // create a new etat_livraison
+        $livraison = new EtatLivraison([
+            "etat_liverable_id" => $achat->etat_liverable_id,
+            "etat_liverable_type" => $achat->etat_liverable_type
+        ]);
+        $achat->etatLivraison()->save($livraison);
+
         // create the session for the id
         session([
             "facture_details" => [
@@ -82,7 +92,7 @@ class AchatController extends Controller
         if ($request->session()->exists("facture_details")) {
             
             $factureDetails = $request->session()->get("facture_details");
-
+            
             return view("achats.create_article", [
                 "numero_facture" => $factureDetails["numero_facture"]
             ]);
@@ -104,19 +114,19 @@ class AchatController extends Controller
 
         $factureDetails = $request->session()->get("facture_details");
         $formFields["achat_id"] = $factureDetails["id"];
-        
+
+        // dd($factureDetails);
         // store the article
-        ArticleAchat::create($formFields);
+        $article = ArticleAchat::create($formFields);
 
         return redirect("/achats/create_article");
-
     }
 
     /* ------------------------------------------------------------------------------------------------ */
     /* -------------------------------- EDIT AND UPDATE FUNCTIONS  ------------------------------------ */
     /* ------------------------------------------------------------------------------------------------ */
     // show the edit form for Invoice    
-    public function editFacture(string $id)
+    public function editFacture(Request $request, string $id)
     {
         $societeId = auth()->user()->societe_id;
         $company = Societe::find($societeId);
@@ -129,6 +139,8 @@ class AchatController extends Controller
             ] 
         ]);
 
+        // $fac = $request->session()->get("facture_details");
+        // dd($fac);
         return view("achats.edit", [
             "achat" => $achat,
             "fournisseurs" => $company->fournisseurs
@@ -152,10 +164,12 @@ class AchatController extends Controller
         // create the session for the id
         session([
             "facture_details" => [
-                "id" => $achat,
+                "id" => $id,
                 "numero_facture" => $formFields["numero_facture"]
             ] 
         ]);
+
+        // dd($achat);
 
         return redirect("/achats/show/{$id}");
     }

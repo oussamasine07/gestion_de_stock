@@ -32,11 +32,6 @@
                     </button>
                 </form>
             </li>
-            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="cree un livraison pour cette facture">
-                <a class="btn btn-primary btn-sm" href="/livraisons/create/{{ $commande->id }}">
-                    cree un facture
-                </a>
-            </li>
         </ul>
     </td>
 </tr>

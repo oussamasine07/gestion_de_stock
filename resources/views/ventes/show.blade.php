@@ -14,14 +14,19 @@
                 </div>
                 <div class="col-md-12 py-2">
                     <div class="page-header-title">
-                        <h2 class="mb-0">Facture Vente N°  </h2>
-                        {{-- {{ $achat->numero_facture }} --}}
+                        <h2 class="mb-0">
+                            Facture Vente N° 
+                            <span class="uppercase"> 
+                                {{ $vente->numero_facture }} 
+                            </span>
+                        </h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- [ breadcrumb ] end -->
+    
     <div class="page_container">
         <div class="page">
             <div class="logo-wrapper">
@@ -79,13 +84,13 @@
                 <table class="invoice-table">
                     <thead>
                         <tr>
-                            <th class="center">#</th>
+                            <th class="text-center">#</th>
                             <th class="table-col-main">Libelle</th>
-                            <th class="center">Prix</th>
-                            <th class="center table-col-sm">Qté</th>
-                            <th class="center table-col-sm">Total HT</th>
-                            <th class="center">TVA</th>
-                            <th class="center">TTC</th>
+                            <th class="text-center">Prix</th>
+                            <th class="text-center table-col-sm">Qté</th>
+                            <th class="text-center table-col-sm">Total HT</th>
+                            <th class="text-center">TVA</th>
+                            <th class="text-center">TTC</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +99,7 @@
                                 <td class="center">{{ $article->id }}</td>
                                 <td class="table-col-main">{{ $article->nom_article }}</td>
                                 <td class="right">{{ $article->prix_unitaire }}</td>
-                                <td class="center table-col-sm">{{ $article->quantite }}</td>
+                                <td class="text-center table-col-sm">{{ $article->quantite }}</td>
                                 <td class="right table-col-sm">{{ $article->montant_total }}</td>
                                 <td class="right">{{ $article->montant_tva }}</td>
                                 <td class="right">{{ $article->montant_ttc }}</td>
@@ -126,33 +131,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2500</td>
-                                <td>20%</td>
-                                <td>300</td>
-                                <td>2900</td>
-                            </tr>
-                            <tr>
-                                <td>2500</td>
-                                <td>14%</td>
-                                <td>300</td>
-                                <td>2900</td>
-                            </tr>
-                            <tr>
-                                <td>2500</td>
-                                <td>10%</td>
-                                <td>300</td>
-                                <td>2900</td>
-                            </tr>
-                            <tr>
-                                <td>2500</td>
-                                <td>7%</td>
-                                <td>300</td>
-                                <td>2900</td>
-                            </tr>
+                            @foreach ($sums as $sum)
+                                <tr>
+                                    <td>{{ $sum->ht }}</td>
+                                    <td>{{ $sum->pourcentage_tva * 100 }}%</td>
+                                    <td>{{ $sum->tva }}</td>
+                                    <td>{{ $sum->ttc }}</td>
+                                </tr>
+                            @endforeach
                             <tr class="total-row">
                                 <td colspan="3">Total TTC</td>
-                                <td>2900</td>
+                                <td>{{ $total }}</td>
                             </tr>
                         </tbody>
                     </table>

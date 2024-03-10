@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("numero_facture");
             $table->string("libelle");
             $table->date("date_facture");
-            $table->decimal("total_facture", 10, 2)->nullable();
+            $table->decimal("total_facture", 10, 2)->default(0)->nullable();
             $table->timestamps();
         });
     }

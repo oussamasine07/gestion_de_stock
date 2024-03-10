@@ -7,13 +7,18 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../navigation/index.html">Acceil</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0)">Achats</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0)">Ventes</a></li>
                         <li class="breadcrumb-item" aria-current="page">Cree Une Nouvelle Livraison</li>
                     </ul>
                 </div>
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h2 class="mb-0">Cree Une Nouvelle Livraison Facture N° {{ $liverable->numero_facture }} </h2>
+                        <h2 class="mb-0">
+                            Cree Une Nouvelle Livraison Pour Facture N° 
+                            <span class="uppercase">
+                                {{ $vente->numero_facture }}    
+                            </span> 
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -27,7 +32,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/livraisons/store_delivery/{{ $liverable->id }}?etat_livraison={{ $etat }}" method="POST">
+                    <form action="/livraisons/store_delivery/{{ $vente->id }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

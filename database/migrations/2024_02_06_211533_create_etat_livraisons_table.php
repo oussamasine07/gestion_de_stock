@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('etat_livraisons', function (Blueprint $table) {
-            $table->foreignId("achat_id")->constrained();
-            $table->decimal("total_facture")->nullable()->default(0);
-            $table->decimal("montant_livre")->nullable()->default(0);
-            $table->decimal("rest_non_livre")->nullable()->default(0);
+            $table->integer("etat_liverable_id");
+            $table->string("etat_liverable_type");
+            $table->decimal("total_facture", 10, 2)->default(0)->nullable();
+            $table->decimal("montant_livre", 10, 2)->default(0)->nullable();
+            $table->decimal("rest_non_livre", 10, 2)->default(0)->nullable();
             $table->timestamps();
         });
     }
