@@ -12,18 +12,18 @@
             <ul class="list-inline me-auto mb-0">
                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                     title="Edit">
-                    <a href="/achats/edit_article/{{ $article->id }}"
+                    <a href="{{ route("achats.editArticle", $article->id ) }}"
                         class="avtar avtar-xs btn-link-success btn-pc-default">
                         <i class="ti ti-edit-circle f-18"></i>
                     </a>
                 </li>
                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                     title="Delete">
-                    <form action="/achats/delete_article/{{ $article->id }}" method="POST"
+                    <form action="{{ route("achats.destroyArticle", $article->id ) }}" method="POST"
                         class="avtar avtar-xs btn-link-danger btn-pc-default">
                         @method('DELETE')
                         @csrf
-                        <button type="submit">
+                        <button type="submit" class="btn btn-danger btn-sm">
                             <i class="ti ti-trash f-18"></i>
                         </button>
                     </form>

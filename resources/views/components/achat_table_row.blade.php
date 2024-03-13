@@ -9,21 +9,21 @@
         <ul class="list-inline me-auto mb-0">
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Show">
-                <a href="/achats/show/{{ $achat->id }}"
+                <a href="{{ route("achats.showFacture", $achat->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-eye f-18"></i>
                 </a>
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Edit">
-                <a href="/achats/edit/{{ $achat->id }}"
+                <a href="{{ route("achats.editFacture", $achat->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-edit-circle f-18"></i>
                 </a>
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Delete">
-                <form action="/achats/delete/{{ $achat->id }}" method="POST"
+                <form action="{{ route("achats.destroyFacture", $achat->id) }}}" method="POST"
                     class="avtar avtar-xs btn-link-danger btn-pc-default">
                     @method('DELETE')
                     @csrf
@@ -32,6 +32,7 @@
                     </button>
                 </form>
             </li>
+            
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="cree un livraison pour cette facture">
                 <a class="btn btn-primary btn-sm" href="/livraisons/create/{{ $achat->id }}?etat_livraison=achat">
                     livrer

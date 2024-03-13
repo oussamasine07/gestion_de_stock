@@ -45,7 +45,9 @@ class ClientController extends Controller
                         ->first();
         // check if this client already exists in DB
         if ($client) {
-            return redirect("/clients/create")->with("message", "vous avez déjà ce client dans votre liste");
+            return redirect()
+                        ->route("clients.create")
+                        ->with("message", "vous avez déjà ce client dans votre liste");
         } else {
             $formFields["societe_id"] = auth()->user()->societe_id;
             // create a session
@@ -53,10 +55,14 @@ class ClientController extends Controller
             session(["client" => $client]);
 
             if ($client->statu_social == "ste") {
-                return redirect("/clients/create_info_ste");
+                return redirect()
+                            ->route("clients.createSteInfo")
+                            ->with("message", "le client est bien enregistre");
             }
             if ($client->statu_social == "pp") {
-                return redirect("/clients/create_info_pp");
+                return redirect()
+                            ->route("clients.createPPInfo")
+                            ->with("message", "le client est bien enregistre");
             }
         }
 

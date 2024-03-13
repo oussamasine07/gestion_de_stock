@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/achats/update_article/{{ $article->id }}" method="POST">
+                    <form action=" {{ route("achats.updateArticle", $article->id) }}" method="POST">
                         @csrf
                         @method("PUT")
                         

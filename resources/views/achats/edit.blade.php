@@ -27,10 +27,9 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/achats/update/{{ $achat->id }}" method="POST">
+                    <form action=" {{ route("achats.updateFacture", $achat->id) }}" method="POST">
                         @csrf
                         @method("PUT")
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -88,16 +87,13 @@
                                     <button type="submit" class="btn btn-primary">Maitre A Joure et Suive Les Articles</button>
                                 </div>
                                 <div class="text-end btn-page mb-0 mt-4">
-                                    <a href="/achats/show/{{ $achat->id }}" class="btn btn-success">Modifier Les Articles</a>
+                                    <a href=" {{ route("achats.showFacture", $achat->id) }}" class="btn btn-success">Modifier Les Articles</a>
                                 </div>
                             </div>
                         </div>
-                        
                     </form>
 
-                    
-
-                    <form action="/achats/end_articale" method="POST">
+                    <form action="{{ route("achats.endArticle") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="text-end btn-page mb-0 mt-4 col-md-6">

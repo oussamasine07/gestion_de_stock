@@ -26,17 +26,17 @@
     <td class="text-center">
       <ul class="list-inline me-auto mb-0">
         <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
-          <a href="/produits/show/{{ $produit->id }}" class="avtar avtar-xs btn-link-secondary btn-pc-default" >
+          <a href="{{ route("produits.show", $produit->id) }}" class="avtar avtar-xs btn-link-secondary btn-pc-default" >
             <i class="ti ti-eye f-18"></i>
           </a>
         </li>
         <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Edit">
-          <a href="/produits/edit/{{ $produit->id }}" class="avtar avtar-xs btn-link-success btn-pc-default">
+          <a href="{{ route("produits.edit", $produit->id) }}" class="avtar avtar-xs btn-link-success btn-pc-default">
             <i class="ti ti-edit-circle f-18"></i>
           </a>
         </li>
         <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
-          <form action="/produits/delete/" method="POST" class="avtar avtar-xs btn-link-danger btn-pc-default">
+          <form action="{{ route("produits.destroy", $produit->id) }}" method="POST" class="avtar avtar-xs btn-link-danger btn-pc-default">
             @method("DELETE")
             @csrf
             <button type="submit" class="btn btn-danger btn-sm">

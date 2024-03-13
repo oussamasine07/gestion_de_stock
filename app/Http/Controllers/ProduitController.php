@@ -63,7 +63,8 @@ class ProduitController extends Controller
         // if exists just update the quantity and the price
         if ($produit) {
             session(["produit_id" => $produit->id]);
-            return redirect("/produits/create_prix")
+            return redirect()
+                    ->route("produits.createPrix")
                     ->with("message", "produit a ete crée");
         } else {
             // if not create a new one
@@ -71,7 +72,8 @@ class ProduitController extends Controller
             // create a session to store product id
             session(["produit_id" => $produit->id]);
             // redirect to price page
-            return redirect("/produits/create_prix")
+            return redirect()
+                    ->route("produits.createPrix")
                     ->with("message", "produit a ete crée");
         }
     }
@@ -81,7 +83,8 @@ class ProduitController extends Controller
         if ($request->session()->exists("produit_id")) {
             return view("produits.create_prix_produit");
         } else {
-            return redirect("/produits/create");
+            return redirect()
+                    ->route("produits.create");
         }
     }
 
@@ -97,7 +100,9 @@ class ProduitController extends Controller
 
         PrixProduit::create($formFields);
         
-        return redirect("/produits/create_quantite")->with("message", "prix de produit ete ajoute!");
+        return redirect()
+                ->route("produits.createQuantite")
+                ->with("message", "prix de produit ete ajoute!");
 
 
     }
@@ -110,7 +115,8 @@ class ProduitController extends Controller
                 "stocks" => $societe->stocks 
             ]);
         } else {
-            return redirect("/produits/create");
+            return redirect()
+                    ->route("produits.create");
         }
     }
 
@@ -122,11 +128,21 @@ class ProduitController extends Controller
         ]);
 
         $formFields["produit_id"] = $request->session()->get("produit_id");
+        // check if the stock is already exists, if yes increment the quantity
+        $stock = EtatQuantiteStock::where("stock_id", "=", $formFields["stock_id"])
+                    ->get()
+                    ->first();
+        if ($stock) {
+            $formFields["quantite"] = $stock->quantite + $formFields["quantite"];
+            $stock->update($formFields);
+        } else {
+            // if not create a new one 
+            EtatQuantiteStock::create($formFields);
+        }
 
-        EtatQuantiteStock::create($formFields);
-
-        return redirect("/produits/create_quantite")->with("message", "quantite ete crée!");
-
+        return redirect()
+                ->route("produits.createQuantite")
+                ->with("message", "quantite ete crée!");
     }
 
     /* ------------------------------------------------------------------------------------------------ */
@@ -153,7 +169,9 @@ class ProduitController extends Controller
         // get the product
         Produit::find($id)->update($formFields);
 
-        return redirect("/produits")->with("message", "produit est bien mettre a jour");
+        return redirect()
+                ->route("produits.index")
+                ->with("message", "produit est bien mettre a jour");
     }
 
     public function editQuantite (Request $request, string $id)
@@ -176,13 +194,16 @@ class ProduitController extends Controller
 
         $produitQuantite = EtatQuantiteStock::where("stock_id", "=", $id)->update($formFields);
         
-        return redirect("/produits/show/{$produitQuantite}")->with("message", "la quantité est mise à jour");
+        return redirect()
+                ->route("produits.show", $id)
+                ->with("message", "la quantité est mise à jour");
     }
 
     public function addStockQuantite (string $id)
     {
         session(["produit_id" => $id]);
-        return redirect("/produits/create_quantite");
+        return redirect()
+                ->route("produits.createQuantite");
     }
 
     public function editPrix (string $id)
@@ -203,7 +224,9 @@ class ProduitController extends Controller
         $prix = PrixProduit::find($id);
         $prix->update($formFields);
         
-        return redirect("/produits/show/" . $prix->produit_id)->with("message", "la quantité est mise à jour");
+        return redirect()
+                ->route("produits.show", $prix->produit_id)
+                ->with("message", "la quantité est mise à jour");
     }
 
     public function destroy(string $id)
@@ -216,12 +239,15 @@ class ProduitController extends Controller
         $quantite = EtatQuantiteStock::where("stock_id", "=", $id);
         $produit = $quantite->first()->produit_id;
         $quantite->delete();
-        return redirect("/produits/show/" . $produit)->with("message", "la quantité est suprimé");
+        return redirect()
+                ->route("produits.show", $produit)
+                ->with("message", "la quantité est suprimé");
     }
 
     public function end (Request $request) 
     {
         $request->session()->forget('produit_id');
-        return redirect("/produits");
+        return redirect()
+                ->route("produits.index");
     }
 }

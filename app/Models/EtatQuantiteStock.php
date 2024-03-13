@@ -16,6 +16,8 @@ class EtatQuantiteStock extends Model
         "quantite"
     ];
 
+    public $primaryKey = "stock_id";
+
     public function produitStock()
     {
         return $this->belongsTo(Produit::class);

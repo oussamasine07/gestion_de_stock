@@ -10,21 +10,21 @@
         <ul class="list-inline me-auto mb-0">
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Consulter La Facture">
-                <a href="/ventes/show/{{ $article->id }}"
+                <a href="{{ route("ventes.show", $article->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-eye f-18"></i>
                 </a>
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Edit">
-                <a href="/ventes/edit/{{ $article->id }}"
+                <a href="{{ route("ventes.edit", $article->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-edit-circle f-18"></i>
                 </a>
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Delete">
-                <form action="/ventes/delete/{{ $article->id }}" method="POST"
+                <form action="{{ route("ventes.destroy", $article->id) }}" method="POST"
                     class="avtar avtar-xs btn-link-danger btn-pc-default">
                     @method('DELETE')
                     @csrf

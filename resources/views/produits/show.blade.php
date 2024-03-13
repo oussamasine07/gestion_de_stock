@@ -172,7 +172,7 @@
                                             <h5>Etat Des Stocks</h5>
                                         </div>
                                         <div class="col-md-6">
-                                            <form action="/produits/add_quantite/{{ $produit->id }}" method="POST">
+                                            <form action="{{ route("produits.addStockQuantite", $produit->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary btn-sm">ajoute un stock</button>
                                             </form>
@@ -200,14 +200,14 @@
                                                             <ul class="list-inline me-auto mb-0">
                                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                                     title="Edit">
-                                                                    <a href="/produits/etat_stock_quantite/edit/{{ $item->stock_id }}"
+                                                                    <a href="{{ route("produits.editQuantite", $item->stock_id) }}"
                                                                         class="avtar avtar-xs btn-link-success btn-pc-default">
                                                                         <i class="ti ti-edit-circle f-18"></i>
                                                                     </a>
                                                                 </li>
                                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                                     title="Delete">
-                                                                    <form action="/produits/etat_stock_quantite/delete/{{ $item->stock_id }}" method="POST"
+                                                                    <form action="{{ route("produits.destroyQnantite", $item->stock_id) }}" method="POST"
                                                                         class="avtar avtar-xs btn-link-danger btn-pc-default">
                                                                         @method('DELETE')
                                                                         @csrf
@@ -253,7 +253,7 @@
                                                             <ul class="list-inline me-auto mb-0">
                                                                 <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                                                                     title="Edit">
-                                                                    <a href="/produits/prix/edit/{{ $item->id }}"
+                                                                    <a href="{{ route("produits.editPrix", $item->id) }}"
                                                                         class="avtar avtar-xs btn-link-success btn-pc-default">
                                                                         <i class="ti ti-edit-circle f-18"></i>
                                                                     </a>

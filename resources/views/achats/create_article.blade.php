@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/achats/store_article" method="POST">
+                    <form action=" {{ route("achats.storeArticle") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -87,7 +87,7 @@
                         </div>
                     </form>
 
-                    <form action="/achats/end_articale" method="POST">
+                    <form action="{{ route("achats.endArticle") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="text-end btn-page mb-0 mt-4 col-md-6">

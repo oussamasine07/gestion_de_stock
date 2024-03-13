@@ -28,7 +28,7 @@
             <div class="card table-card">
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
-                        <a href="/achats/create" class="btn btn-primary">
+                        <a href="{{ route("achats.create") }}" class="btn btn-primary">
                             <i class="ti ti-plus f-18"></i> Ajouter Une Facture
                         </a>
                     </div>

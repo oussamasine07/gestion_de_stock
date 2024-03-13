@@ -33,11 +33,11 @@
             <div class="card table-card">
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
-                        <a href="/achats" class="btn btn-primary">
+                        <a href=" {{ route("achats.index") }}" class="btn btn-primary">
                             <i class="ti ti-plus f-18"></i> Back
                         </a>
                         @if (session()->get("facture_details"))
-                            <a href="/achats/create_article" class="btn btn-success">
+                            <a href="{{ route("achats.createArticle") }}" class="btn btn-success">
                                 <i class="ti ti-plus f-18"></i> Ajouter Une Article
                             </a>
                         @endif

@@ -12,14 +12,14 @@
         <ul class="list-inline me-auto mb-0">
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Edit">
-                <a href="/clients/edit/{{ $client->id }}"
+                <a href="{{ route("clients.edit", $client->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-edit-circle f-18"></i>
                 </a>
             </li>
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Delete">
-                <form action="/clients/delete/{{ $client->id }}" method="POST"
+                <form action="{{ route("clients.destroy", $client->id) }}" method="POST"
                     class="avtar avtar-xs btn-link-danger btn-pc-default ">
                     @method('DELETE')
                     @csrf

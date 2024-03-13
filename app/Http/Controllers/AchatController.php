@@ -16,7 +16,6 @@ class AchatController extends Controller
     /* ----------------------------------------------------------------------------------- */
     public function index()
     {
-        
         $societeId = auth()->user()->societe_id;
         $company = Societe::find($societeId);
         
@@ -27,7 +26,6 @@ class AchatController extends Controller
     
     public function showFacture(string $id)
     {
-        
         $achat = Achat::find($id);
         // dd($achat);
         $articles = $achat->articaleAchats;
@@ -97,7 +95,7 @@ class AchatController extends Controller
                 "numero_facture" => $factureDetails["numero_facture"]
             ]);
         } else {
-            return redirect("/achats");
+            return redirect()->route("achats.index");
         }
     }
 

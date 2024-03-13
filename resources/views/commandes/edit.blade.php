@@ -27,7 +27,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/commandes/update/{{ $commande->id }}" method="POST">
+                    <form action="{{ route("commandes.update", $commande->id) }}" method="POST">
                         @method("PUT")
                         @csrf
                         <div class="row">

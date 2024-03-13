@@ -27,7 +27,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/commandes/chercher/{{ $commande->id }}" method="POST">
+                    <form action="{{ route("commandes.searchProduit", $commande->id) }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -57,7 +57,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/commandes/store_commande_produit" method="POST">
+                    <form action="{{ route("commandes.storeCommanedeProduit") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

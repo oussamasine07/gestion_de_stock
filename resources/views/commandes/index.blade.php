@@ -28,7 +28,7 @@
             <div class="card table-card">
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
-                        <a href="/clients/create" class="btn btn-primary">
+                        <a href="{{ route("commandes.create") }}" class="btn btn-primary">
                             <i class="ti ti-plus f-18"></i> Ajouter Un Client
                         </a>
                     </div>

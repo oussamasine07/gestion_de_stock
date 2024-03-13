@@ -28,7 +28,7 @@
             <div class="card table-card">
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
-                        <a href="/stocks/create" class="btn btn-primary">
+                        <a href="{{ route("stocks.create") }}" class="btn btn-primary">
                             <i class="ti ti-plus f-18"></i> Ajouter Un Stock
                         </a>
                     </div>

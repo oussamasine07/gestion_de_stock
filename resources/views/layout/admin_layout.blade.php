@@ -135,8 +135,8 @@
             </span>
           </a>
           <ul class="pc-submenu">
-            <li class="pc-item"><a class="pc-link" href="/fournisseurs">List Des Fournisseur</a></li>
-            <li class="pc-item"><a class="pc-link" href="/fournisseurs/create">Ajouter un Fournisseur</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("fournisseurs.index") }}">List Des Fournisseur</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("fournisseurs.create") }}">Ajouter un Fournisseur</a></li>
           </ul>
         </li>
 
@@ -154,8 +154,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/clients">Tous les Clients</a></li>
-            <li class="pc-item"><a class="pc-link" href="/clients/create">Nouveau Client</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("clients.index") }}">Tous les Clients</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("clients.create") }}">Nouveau Client</a></li>
           </ul>
         </li>
 
@@ -173,8 +173,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/achats">Tous les achats</a></li>
-            <li class="pc-item"><a class="pc-link" href="/achats/create">Nouvelle facture</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("achats.index") }}">Tous les achats</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("achats.create") }}">Nouvelle facture</a></li>
             <li class="pc-item"><a class="pc-link" href="/livraisons?etat_livraison=achat">Livraisons</a></li>
           </ul>
         </li>
@@ -193,8 +193,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/commandes">Tous les Commandes</a></li>
-            <li class="pc-item"><a class="pc-link" href="/commandes/create">Nouveau Commandes</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("commandes.index") }}">Tous les Commandes</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("commandes.create") }}">Nouveau Commandes</a></li>
           </ul>
         </li>
 
@@ -212,8 +212,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/ventes">Tous les Ventes</a></li>
-            <li class="pc-item"><a class="pc-link" href="/ventes/create">Nouveau Ventes</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("ventes.index") }}">Tous les Ventes</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("ventes.create") }}">Nouveau Ventes</a></li>
             <li class="pc-item"><a class="pc-link" href="/livraisons?etat_livraison=vente">Livraisons</a></li>
           </ul>
         </li>
@@ -251,8 +251,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/produits">Tous les produits</a></li>
-            <li class="pc-item"><a class="pc-link" href="/produits/create">Nouveau produit</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("produits.index") }}">Tous les produits</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("produits.create") }}">Nouveau produit</a></li>
           </ul>
         </li>
 
@@ -270,8 +270,8 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/categories">Tous les categories</a></li>
-            <li class="pc-item"><a class="pc-link" href="/categories/create">Nouveau categorie</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("categories.index") }}">Tous les categories</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("categories.create") }}">Nouveau categorie</a></li>
           </ul>
         </li>
         
@@ -289,20 +289,10 @@
           </a>
           <ul class="pc-submenu">
             {{-- change the links for categories --}}
-            <li class="pc-item"><a class="pc-link" href="/stocks">Tous les stocks</a></li>
-            <li class="pc-item"><a class="pc-link" href="/stocks/create">Nouveau stock</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("stocks.index") }}">Tous les stocks</a></li>
+            <li class="pc-item"><a class="pc-link" href="{{ route("stocks.create") }}">Nouveau stock</a></li>
           </ul>
         </li>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         <li class="pc-item pc-hasmenu">
           <a href="#!" class="pc-link">

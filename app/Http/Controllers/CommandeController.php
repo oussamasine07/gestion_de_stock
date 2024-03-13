@@ -51,7 +51,9 @@ class CommandeController extends Controller
         $commande = Commande::create($formFields);
         session(["commande" => $commande]);
 
-        return redirect("/commandes/create_commande_produit/{$commande->id}")->with("message", "la commande est créer!");
+        return redirect()
+                ->route("commandes.createCommandeProduit", $commande->id)
+                ->with("message", "la commande est créer!");
     }
 
     public function createCommandeProduit(Request $request, string $id)
@@ -68,24 +70,6 @@ class CommandeController extends Controller
             "produit_article" => $request->session()->get("produit"),
             "prixes" => $request->session()->get("prixes")
         ]);
-    }
-
-    public function searchProduit (Request $request, $id)
-    {
-        $request->session()->forget(["produit", "prixes"]);
-        // dd($request);
-        $produit = Produit::where("societe_id", "=", auth()->user()->societe_id)
-                            ->where("id", "=", $request["produit"])
-                            ->first();
-        $prixes = PrixProduit::where("produit_id", "=", $request["produit"])->get();
-
-        // dd($produit);
-        session([
-            "produit" => $produit,
-            "prixes" => $prixes
-        ]);
-        
-        return back();
     }
 
     public function storeCommanedeProduit(Request $request)
@@ -106,8 +90,27 @@ class CommandeController extends Controller
         $request->session()->forget("produit");
         $request->session()->forget("prixes");
 
-        return redirect("/commandes/create_commande_produit/{$commande->id}");
+        return redirect()
+                ->route("commandes.createCommandeProduit", $commande->id);
         
+    }
+
+    public function searchProduit (Request $request, $id)
+    {
+        $request->session()->forget(["produit", "prixes"]);
+        // dd($request);
+        $produit = Produit::where("societe_id", "=", auth()->user()->societe_id)
+                            ->where("id", "=", $request["produit"])
+                            ->first();
+        $prixes = PrixProduit::where("produit_id", "=", $request["produit"])->get();
+
+        // dd($produit);
+        session([
+            "produit" => $produit,
+            "prixes" => $prixes
+        ]);
+        
+        return back();
     }
 
     /* ------------------------------------------------------------------------------------------------ */
@@ -132,7 +135,9 @@ class CommandeController extends Controller
         
         Commande::where("id", "=", $id)->update($formFields);
         
-        return redirect("/commandes")->with("message", "la commande est mettre a jour");
+        return redirect()
+                ->route("commandes.index")
+                ->with("message", "la commande est mettre a jour");
     }
 
     public function editCommandeProduit(Request $request, string $id)
@@ -161,7 +166,8 @@ class CommandeController extends Controller
 
         $article->update($formFields);
 
-        return redirect("/commandes/show/{$article->first()->commande->id}");
+        return redirect()
+                ->route("commandes.show", $article->first()->commande->id);
     }
 
     public function endArticle(Request $request)
@@ -169,7 +175,8 @@ class CommandeController extends Controller
         $id = $request->session()->get("commande")->id;
         $request->session()->forget("commande");
 
-        return redirect("/commandes/show/{$id}");
+        return redirect()
+                ->route("commandes.show", $id);
     }
 
     public function destroy(string $id)

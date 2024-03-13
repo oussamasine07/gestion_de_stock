@@ -27,7 +27,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/commandes/chercher/{{ $article->commande->id }}" method="POST">
+                    <form action="{{ route("commandes.searchProduit", $article->commande->id) }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -57,7 +57,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/commandes/update_commande_produit/{{ $article->id }}" method="POST">
+                    <form action="{{ route("commandes.updateCommandeProduit", $article->id) }}" method="POST">
                         @method("PUT")
                         @csrf
                         <div class="row">
@@ -141,7 +141,7 @@
                         </div>
                     </form>
 
-                    <form action="/commandes/end_article" method="POST">
+                    <form action=" {{ route("commandes.endArticle") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="text-end btn-page mb-0 mt-4 col-md-6">

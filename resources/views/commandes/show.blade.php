@@ -70,7 +70,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/ventes" method="POST">
+                    <form action="{{ route("ventes.store") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

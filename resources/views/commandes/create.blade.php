@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     @else
-                        <form action="/commandes" method="POST">
+                        <form action="{{ route("commandes.store") }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">

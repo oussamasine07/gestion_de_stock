@@ -77,7 +77,7 @@ class VenteController extends Controller
         $formFields["client_id"] = $commande->client_id;
 
         // TODO : create a functionality that checks if the invoice of this order is already exists or not
-        $vente = Vente::where("client_id", "=", $commande->id)->get()->first();
+        $vente = Vente::where("commande_id", "=", $commande->id)->get()->first();
         // dd($vente);
 
         if ($vente) {
@@ -102,7 +102,7 @@ class VenteController extends Controller
             ArticleVente::create($article);
         }
         
-        return redirect("/ventes");
+        return redirect()->route("ventes.index");
     }
 
 
