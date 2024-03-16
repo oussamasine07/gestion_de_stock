@@ -16,9 +16,9 @@ class EtatQuantiteStock extends Model
         "quantite"
     ];
 
-    public $primaryKey = "stock_id";
+    // public $primaryKey = "stock_id";
 
-    public function produitStock()
+    public function produit()
     {
         return $this->belongsTo(Produit::class);
     }
@@ -27,6 +27,5 @@ class EtatQuantiteStock extends Model
     {
         return $this->belongsTo(Stock::class);
     }
-
     
 }

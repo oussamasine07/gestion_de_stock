@@ -242,37 +242,35 @@
                                                 </tr> 
                                             </thead>
                                             <tbody>
-                                                @foreach ($prix as $item)
-                                                    <tr>
-                                                        <td class="text-muted py-1">{{ $item->id }}</td>
-                                                        <td class="py-1">{{ $item->date_livraison }}</td>
-                                                        <td class="py-1 text-center">{{ $item->prix_achat }}</td>
-                                                        <td class="py-1 text-center">{{ $item->marge_benificiaire * 100 }}%</td>
-                                                        <td class="py-1 text-center">{{ $item->prix_de_vente }}</td>
-                                                        <td class="text-center">
-                                                            <ul class="list-inline me-auto mb-0">
-                                                                <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
-                                                                    title="Edit">
-                                                                    <a href="{{ route("produits.editPrix", $item->id) }}"
-                                                                        class="avtar avtar-xs btn-link-success btn-pc-default">
-                                                                        <i class="ti ti-edit-circle f-18"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
-                                                                    title="Delete">
-                                                                    <form action="/produits/prix/delete/{{ $item->id }}" method="POST"
-                                                                        class="avtar avtar-xs btn-link-danger btn-pc-default">
-                                                                        @method('DELETE')
-                                                                        @csrf
-                                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                                            <i class="ti ti-trash f-18"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            </ul>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                                <tr>
+                                                    <td class="text-muted py-1">{{ $prix->id }}</td>
+                                                    <td class="py-1">{{ $prix->date_livraison }}</td>
+                                                    <td class="py-1 text-center">{{ $prix->prix_achat }}</td>
+                                                    <td class="py-1 text-center">{{ $prix->marge_benificiaire * 100 }}%</td>
+                                                    <td class="py-1 text-center">{{ $prix->prix_de_vente }}</td>
+                                                    <td class="text-center">
+                                                        <ul class="list-inline me-auto mb-0">
+                                                            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
+                                                                title="Edit">
+                                                                <a href="{{ route("produits.editPrix", $prix->id) }}"
+                                                                    class="avtar avtar-xs btn-link-success btn-pc-default">
+                                                                    <i class="ti ti-edit-circle f-18"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
+                                                                title="Delete">
+                                                                <form action="/produits/prix/delete/{{ $prix->id }}" method="POST"
+                                                                    class="avtar avtar-xs btn-link-danger btn-pc-default">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                                        <i class="ti ti-trash f-18"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

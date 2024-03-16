@@ -44,7 +44,7 @@ class Produit extends Model
 
     public function prixes ()
     {
-        return $this->hasMany(PrixProduit::class);
+        return $this->hasOne(PrixProduit::class);
     }
 
     public function produitCommandes ()

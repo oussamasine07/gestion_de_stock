@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("nom");
             $table->string("address");
             $table->string("ville");
+            $table->decimal(10, 2)->default(0)->nullable();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Stock;
 use App\Models\Societe;
 use Illuminate\Http\Request;
+use App\Models\EtatQuantiteStock;
 
 class StockController extends Controller
 {
@@ -40,7 +41,13 @@ class StockController extends Controller
 
     public function show(string $id)
     {
-        //
+        $stocks = EtatQuantiteStock::where("stock_id", "=", $id)->get();
+
+        // dd($stocks->produit->prixes);
+
+        return view("stocks.show", [
+            "stocks" => $stocks
+        ]);
     }
 
     public function edit(string $id)

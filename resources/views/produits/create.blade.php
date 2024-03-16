@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route("produits.create") }}" method="POST">
+                    <form action="{{ route("produits.store") }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

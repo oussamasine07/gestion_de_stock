@@ -14,7 +14,6 @@ class ProduitController extends Controller
     public function index()
     {
         $societe = Societe::find(auth()->user()->societe_id);
-        // dd($societe->produits);
         
         return view("produits.index", [
             "produits" => $societe->produits,
@@ -25,7 +24,7 @@ class ProduitController extends Controller
     {
         $produit = Produit::find($id);
         $stocks = $produit->quantiteStock;
-             
+          
         return view("produits.show", [
             "produit" => $produit,
             "stocks" => $stocks,
@@ -103,8 +102,6 @@ class ProduitController extends Controller
         return redirect()
                 ->route("produits.createQuantite")
                 ->with("message", "prix de produit ete ajoute!");
-
-
     }
 
     public function createQuantite(Request $request)
@@ -128,18 +125,7 @@ class ProduitController extends Controller
         ]);
 
         $formFields["produit_id"] = $request->session()->get("produit_id");
-        // check if the stock is already exists, if yes increment the quantity
-        $stock = EtatQuantiteStock::where("stock_id", "=", $formFields["stock_id"])
-                    ->get()
-                    ->first();
-        if ($stock) {
-            $formFields["quantite"] = $stock->quantite + $formFields["quantite"];
-            $stock->update($formFields);
-        } else {
-            // if not create a new one 
-            EtatQuantiteStock::create($formFields);
-        }
-
+        EtatQuantiteStock::create($formFields);
         return redirect()
                 ->route("produits.createQuantite")
                 ->with("message", "quantite ete crée!");
