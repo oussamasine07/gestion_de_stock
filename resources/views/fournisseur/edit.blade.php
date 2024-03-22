@@ -28,7 +28,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/fournisseurs/update/{{ $fournisseur->id }}" method="POST">
+                    <form action="{{ route("fournisseurs.update", $fournisseur->id) }}" method="POST">
                         @method("PUT")
                         @csrf
                         <div class="row">
@@ -211,7 +211,7 @@
                                 </div>
                                 
                                 <div class="text-end btn-page mb-0 mt-4">
-                                    <button type="submit" class="btn btn-primary">Ajouter le Fournisseur</button>
+                                    <button type="submit" class="btn btn-primary">Mettre A Joure</button>
                                 </div>
                             </div>
                         </div>

@@ -182,9 +182,6 @@ Route::prefix("paiements")->group(function () {
     
 });
 
-
-
-
 // stock routes
 Route::resource("stocks", StockController::class);
 

@@ -24,10 +24,6 @@
         <ul class="list-inline me-auto mb-0">
             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip"
                 title="Mettre a joure">
-                {{-- <a href="/fournisseurs/edit/{{ $fournisseur->id }}"
-                    class="avtar avtar-xs btn-link-success btn-pc-default">
-                    <i class="ti ti-edit-circle f-18"></i>
-                </a> --}}
                 <a href="{{ route("fournisseurs.edit", $fournisseur->id) }}"
                     class="avtar avtar-xs btn-link-success btn-pc-default">
                     <i class="ti ti-edit-circle f-18"></i>

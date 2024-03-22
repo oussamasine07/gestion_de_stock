@@ -34,6 +34,8 @@ class PaiementController extends Controller
                                         ->where("etat_paiements.payable_type", "=", "App\Models\Achat");
                                 })
                                 ->join("fournisseurs", "fournisseurs.id", "=", "achats.fournisseur_id")
+                                ->join("societes", "societes.id", "=", "fournisseurs.societe_id")
+                                ->where("societes.id", "=", auth()->user()->societe_id)
                                 ->paginate($numPages)
                                 : Vente::select(
                                     "ventes.id",
@@ -51,6 +53,8 @@ class PaiementController extends Controller
                                         ->where("etat_paiements.payable_type", "=", "App\Models\Vente");
                                 })
                                 ->join("clients", "clients.id", "=", "ventes.client_id")
+                                ->join("societes", "societes.id", "=", "clients.societe_id")
+                                ->where("societes.id", "=", auth()->user()->societe_id)
                                 ->paginate($numPages);
 
         // dd($etatPaiements);
@@ -105,10 +109,10 @@ class PaiementController extends Controller
     public function showFactureDetails (Request $request, string $id)
     {  
         
-        $item = $request->query("etat_paiment") == "achats" 
+        $item = $request->query("etat_paiement") == "achat" 
                     ? Achat::find($id)
                     : Vente::find($id);
-        // dd($item->payments);
+        // dd($item);
         return view("paiements.paiement_details", [
             "paiements" => $item->payments,
             "achat" => $item,
@@ -146,7 +150,7 @@ class PaiementController extends Controller
         $etatPaiements = EtatPaiement::where("payable_id", "=", $id)
                             ->where("payable_type", "=", $payable_type)
                             ->get()->first();
-        
+        // dd($id);
         if ($formFields["montant_regle"] <= $etatPaiements->rest_regle) {
             // create the paiement
             $newPayement = new Paiement($formFields);
@@ -156,11 +160,15 @@ class PaiementController extends Controller
 
             $payableItem->payments()->save($newPayement);
 
-            return redirect("/paiements/detail_de_paiement/{$id}?etat_paiment={$request->query("etat_paiement")}")
-                    ->with("message", "paiement effectué");
+            return redirect("/paiements/detail_de_paiement/{$id}?etat_paiement={$request->query("etat_paiement")}")
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Paiement : ",
+                        "body" => "paiement effectué"
+                    ]));
         }
 
-        return redirect("/paiements/create/{$id}")
+        return redirect("/paiements/create/{$id}?etat_paiement={$request->query("etat_paiement")}")
                 ->withErrors("montant_regle", "le montant que vous essayez de payer est supérieur à le rest a regle")
                 ->onlyInput("montant_regle");
 

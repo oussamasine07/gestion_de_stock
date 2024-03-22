@@ -64,7 +64,11 @@ class ProduitController extends Controller
             session(["produit_id" => $produit->id]);
             return redirect()
                     ->route("produits.createPrix")
-                    ->with("message", "produit a ete crée");
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Produit : ",
+                        "body" => "produit a ete crée"
+                    ]));
         } else {
             // if not create a new one
             $produit = Produit::create($formFields);
@@ -73,7 +77,11 @@ class ProduitController extends Controller
             // redirect to price page
             return redirect()
                     ->route("produits.createPrix")
-                    ->with("message", "produit a ete crée");
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Produit : ",
+                        "body" => "produit a ete crée"
+                    ]));
         }
     }
     
@@ -101,7 +109,11 @@ class ProduitController extends Controller
         
         return redirect()
                 ->route("produits.createQuantite")
-                ->with("message", "prix de produit ete ajoute!");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "prix de produit ete ajoute!"
+                ]));
     }
 
     public function createQuantite(Request $request)
@@ -128,7 +140,11 @@ class ProduitController extends Controller
         EtatQuantiteStock::create($formFields);
         return redirect()
                 ->route("produits.createQuantite")
-                ->with("message", "quantite ete crée!");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "quantite ete crée!"
+                ]));
     }
 
     /* ------------------------------------------------------------------------------------------------ */
@@ -157,7 +173,11 @@ class ProduitController extends Controller
 
         return redirect()
                 ->route("produits.index")
-                ->with("message", "produit est bien mettre a jour");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "produit est bien mettre a jour"
+                ]));
     }
 
     public function editQuantite (Request $request, string $id)
@@ -182,7 +202,11 @@ class ProduitController extends Controller
         
         return redirect()
                 ->route("produits.show", $id)
-                ->with("message", "la quantité est mise à jour");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "la quantité est mise à jour"
+                ]));
     }
 
     public function addStockQuantite (string $id)
@@ -212,7 +236,11 @@ class ProduitController extends Controller
         
         return redirect()
                 ->route("produits.show", $prix->produit_id)
-                ->with("message", "la quantité est mise à jour");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "la quantité est mise à jour"
+                ]));
     }
 
     public function destroy(string $id)
@@ -227,7 +255,11 @@ class ProduitController extends Controller
         $quantite->delete();
         return redirect()
                 ->route("produits.show", $produit)
-                ->with("message", "la quantité est suprimé");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Produit : ",
+                    "body" => "la quantité est suprimé"
+                ]));
     }
 
     public function end (Request $request) 

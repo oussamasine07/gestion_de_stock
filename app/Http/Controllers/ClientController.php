@@ -47,7 +47,11 @@ class ClientController extends Controller
         if ($client) {
             return redirect()
                         ->route("clients.create")
-                        ->with("message", "vous avez déjà ce client dans votre liste");
+                        ->with("message", collect([
+                            "type" => "alert-danger",
+                            "title" => "Client Rejeté : ",
+                            "body" => "Vous avez bien déja ajoute cette client !"
+                        ]));
         } else {
             $formFields["societe_id"] = auth()->user()->societe_id;
             // create a session
@@ -57,12 +61,20 @@ class ClientController extends Controller
             if ($client->statu_social == "ste") {
                 return redirect()
                             ->route("clients.createSteInfo")
-                            ->with("message", "le client est bien enregistre");
+                            ->with("message", collect([
+                                "type" => "alert-success",
+                                "title" => "Client Crée: ",
+                                "body" => "vous avez bien ajoute le client, entre les informations de cette societe"
+                            ]));
             }
             if ($client->statu_social == "pp") {
                 return redirect()
                             ->route("clients.createPPInfo")
-                            ->with("message", "le client est bien enregistre");
+                            ->with("message", collect([
+                                "type" => "alert-success",
+                                "title" => "Client Crée: ",
+                                "body" => "vous avez bien ajoute le client, entre les informations de cette Entreprise"
+                            ]));
             }
         }
 
@@ -92,7 +104,13 @@ class ClientController extends Controller
         InfoSte::create($formFields);
         $request->session()->forget("client");
 
-        return redirect("/clients")->with("message", "le client ".$client->nom_ou_raison_social." est créé");
+        return redirect()
+                ->route("clients.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Client Crée: ",
+                    "body" => "le client ".$client->nom_ou_raison_social." est crée"
+                ]));
     }
 
     public function createPPInfo (Request $request)
@@ -116,7 +134,13 @@ class ClientController extends Controller
         InfoPp::create($formFields);
         $request->session()->forget("client");
 
-        return redirect("/clients")->with("message", "le client ".$client->nom_ou_raison_social." est créé");
+        return redirect("/clients")
+                ->route("clients.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Client Crée: ",
+                    "body" => "le client ".$client->nom_ou_raison_social." est crée"
+                ]));
     }
 
     public function edit(string $id)
@@ -143,7 +167,13 @@ class ClientController extends Controller
         $newClient = Client::find($id);
         // dd($newClient);
         if ($newClient->statu_social == $oldClient->statu_social) {
-            return redirect("/clients")->with("message", "client est mettre a joure");
+            return redirect()
+                    ->route("clients.index")
+                    ->with("message", collect([
+                        "type" => "alert-warning",
+                        "title" => "Client Crée: ",
+                        "body" => "Le client est ajoure"
+                    ]));
         } else {
             session([ "client" => $newClient ]);
             if ($newClient->statu_social == "ste") {

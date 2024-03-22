@@ -33,7 +33,13 @@ class CategorieController extends Controller
 
         Categorie::create($formFields);
 
-        return redirect("/categories")->with("message", "categorie a ete cree!");
+        return redirect()
+                ->route("categories.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Categorie : ",
+                    "body" => "categorie a ete cree!"
+                ]));
     }
 
     public function show(string $id)
@@ -57,13 +63,25 @@ class CategorieController extends Controller
 
         Categorie::where("id", $id)->update($formFields);
 
-        return redirect("/categories")->with("message", "categorie est a joure !");
+        return redirect()
+                ->route("categories.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Categorie : ",
+                    "body" => "categorie est ajoure"
+                ]));
     }
 
     public function destroy(string $id)
     {
         Categorie::where("id", $id)->delete();
 
-        return redirect("/categories")->with("message", "categorie est suprime !");
+        return redirect("/categories")
+                ->route("categories.index")
+                ->with("message", collect([
+                    "type" => "alert-warning",
+                    "title" => "Categorie : ",
+                    "body" => "categorie est suprime !"
+                ]));
     }
 }

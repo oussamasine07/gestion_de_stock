@@ -94,7 +94,12 @@ class LivraisonController extends Controller
                 ]
             ]);
 
-            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}");
+            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}")
+            ->with("message", collect([
+                "type" => "alert-success",
+                "title" => "Livraison : ",
+                "body" => "La livraison est bien crée"
+            ]));
         }
         
         if ($request->query("etat_livraison") == "vente") {
@@ -109,11 +114,13 @@ class LivraisonController extends Controller
                 ]
             ]);
 
-            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}");
+            return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$delivery->id}&etat_livraison={$delivery->etat_livraison}")
+            ->with("message", collect([
+                "type" => "alert-success",
+                "title" => "Livraison : ",
+                "body" => "La livraison est bien crée"
+            ]));
         }
-
-        
-
     }
 
     // create a new delivery article
@@ -192,12 +199,20 @@ class LivraisonController extends Controller
         // check if the total delivery >= rest of the etat_livraison
         if ($totalPrice > $etatLivraison->rest_non_livre) {
             return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}")
-                    ->with("message", "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture");
+                    ->with("message", collect([
+                        "type" => "alert-danger",
+                        "title" => "Livraison : ",
+                        "body" => "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture"
+                    ]));
         } else {
             // check if the total qty delivery is <= rest of the etat_produit_livraison
             if ($formFields["quantite"] > $etatProduitLivres->rest_quantite) {
                 return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}")
-                        ->with("message", "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture");
+                        ->with("message", collect([
+                            "type" => "alert-danger",
+                            "title" => "Livraison : ",
+                            "body" => "la quantité que vous avez mentionnée est supérieure à celle figurant sur la facture"
+                        ]));
             } else {
                 // store the delivered article here
                 $newArticle = new ProduitsLivre($formFields);
@@ -206,7 +221,11 @@ class LivraisonController extends Controller
                     $achat->produitsLivres()->save($newArticle);
                     
                     return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}&etat_livraison={$request->query('etat_livraison')}")
-                        ->with("message", "le produit " . $formFields["nom_article"] . " est ajouté");
+                            ->with("message", collect([
+                                "type" => "alert-info",
+                                "title" => "Livraison : ",
+                                "body" => "le produit " . $formFields["nom_article"] . " est ajouté"
+                            ]));
                 }
 
                 if ($request->query("etat_livraison") == "vente") {
@@ -214,7 +233,11 @@ class LivraisonController extends Controller
                     $vente->produitsLivres()->save($newArticle);
 
                     return redirect("/livraisons/create_article?liverable_id={$id}&livraison={$livraion_details['id']}&etat_livraison={$request->query('etat_livraison')}")
-                        ->with("message", "le produit " . $formFields["nom_article"] . " est ajouté");
+                            ->with("message", collect([
+                                "type" => "alert-info",
+                                "title" => "Livraison : ",
+                                "body" => "le produit " . $formFields["nom_article"] . " est ajouté"
+                            ]));
                 }
             }
         }
@@ -225,7 +248,12 @@ class LivraisonController extends Controller
     public function endArticle (Request $request)
     {
         $request->session()->forget('livraion_details');
-        return redirect("/achats");
+        return redirect("/achats")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Livraison : ",
+                    "body" => "La livraison finnie"
+                ]));
     }
 
 }

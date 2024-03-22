@@ -80,7 +80,13 @@ class AchatController extends Controller
             ] 
         ]);
 
-        return redirect("/achats/create_article");
+        return redirect()
+                ->route("achats.createArticle")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Achat : ",
+                    "body" => "Vous avez bien ajoute l'achat"
+                ]));
     }
 
     // show create form for new Article
@@ -117,7 +123,13 @@ class AchatController extends Controller
         // store the article
         $article = ArticleAchat::create($formFields);
 
-        return redirect("/achats/create_article");
+        return redirect()
+                ->route("achats.createArticle")
+                ->with("message", collect([
+                    "type" => "alert-info",
+                    "title" => "Achat : ",
+                    "body" => "l'article bien ajoute"
+                ]));
     }
 
     /* ------------------------------------------------------------------------------------------------ */
@@ -169,7 +181,13 @@ class AchatController extends Controller
 
         // dd($achat);
 
-        return redirect("/achats/show/{$id}");
+        return redirect()
+                ->route("achats.showFacture", $id)
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Achat : ",
+                    "body" => "Factue est ajoure"
+                ]));
     }
     
     // show the edit form for Article  
@@ -199,14 +217,27 @@ class AchatController extends Controller
 
         $factureDetails = $request->session()->get("facture_details");
 
-        return redirect("/achats/show/{$factureDetails['id']}");
+        return redirect()
+                ->route("achats.showFacture", $factureDetails['id'])
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Achat : ",
+                    "body" => "Article est ajoure"
+                ]));
     }
 
     // end the session for updating or creating a new Invoice
     public function endArticle (Request $request)
     {
         $request->session()->forget('facture_details');
-        return redirect("/achats");
+
+        return redirect()
+                ->route("achats.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Achat : ",
+                    "body" => "Achat finnie."
+                ]));
     }
 
     /* ------------------------------------------------------------------------------------------------ */
@@ -217,7 +248,13 @@ class AchatController extends Controller
     {
         Achat::where("id", $id)
                 ->delete();
-        return redirect("/achats");
+        return redirect()
+                ->route("achats.index")
+                ->with("message", collect([
+                    "type" => "alert-warning",
+                    "title" => "Achat : ",
+                    "body" => "Factue d'achat suprimer"
+                ]));
     }
     
     // delete one article
@@ -229,6 +266,12 @@ class AchatController extends Controller
 
         $factureDetails = $request->session()->get("facture_details");
 
-        return redirect("/achats/show/{$factureDetails['id']}");
+        return redirect()
+                ->route("achats.showFacture", $factureDetails['id'])
+                ->with("message", collect([
+                    "type" => "alert-warning",
+                    "title" => "Achat : ",
+                    "body" => "Article d'achat suprimer"
+                ]));
     }
 }

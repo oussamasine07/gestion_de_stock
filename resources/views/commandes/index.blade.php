@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <div class="text-end p-4 pb-0">
                         <a href="{{ route("commandes.create") }}" class="btn btn-primary">
-                            <i class="ti ti-plus f-18"></i> Ajouter Un Client
+                            <i class="ti ti-plus f-18"></i> Ajouter Une commande
                         </a>
                     </div>
                     <div class="table-responsive">

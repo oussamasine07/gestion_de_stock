@@ -53,7 +53,11 @@ class CommandeController extends Controller
 
         return redirect()
                 ->route("commandes.createCommandeProduit", $commande->id)
-                ->with("message", "la commande est créer!");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Commande Crée: ",
+                    "body" => "La commande est bien ajouter"
+                ]));
     }
 
     public function createCommandeProduit(Request $request, string $id)
@@ -91,7 +95,12 @@ class CommandeController extends Controller
         $request->session()->forget("prixes");
 
         return redirect()
-                ->route("commandes.createCommandeProduit", $commande->id);
+                ->route("commandes.createCommandeProduit", $commande->id)
+                ->with("message", collect([
+                    "type" => "alert-info",
+                    "title" => "Produit : ",
+                    "body" => "Produit bien ajouter"
+                ]));
         
     }
 
@@ -137,7 +146,11 @@ class CommandeController extends Controller
         
         return redirect()
                 ->route("commandes.index")
-                ->with("message", "la commande est mettre a jour");
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Commande : ",
+                    "body" => "la commande est mettre a jour"
+                ]));
     }
 
     public function editCommandeProduit(Request $request, string $id)
@@ -167,7 +180,12 @@ class CommandeController extends Controller
         $article->update($formFields);
 
         return redirect()
-                ->route("commandes.show", $article->first()->commande->id);
+                ->route("commandes.show", $article->first()->commande->id)
+                ->with("message", collect([
+                    "type" => "alert-info",
+                    "title" => "Commande : ",
+                    "body" => "la produit est mettre a jour"
+                ]));
     }
 
     public function endArticle(Request $request)

@@ -36,7 +36,13 @@ class StockController extends Controller
 
         Stock::create($formFields);
 
-        return redirect("/stocks");
+        return redirect()
+                ->route("stocks.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Stock : ",
+                    "body" => "Vous avez bien ajoute le stock"
+                ]));
     }
 
     public function show(string $id)
@@ -69,12 +75,24 @@ class StockController extends Controller
 
         Stock::where("id", $id)->update($formFields);
 
-        return redirect("/stocks");
+        return redirect()
+                ->route("stocks.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Stock : ",
+                    "body" => "Vous avez bien mettre ajoure le stock"
+                ]));
     }
 
     public function destroy(string $id)
     {
         Stock::where("id", $id)->delete();
-        return redirect("/stocks");
+        return redirect()
+                ->route("stocks.index")
+                ->with("message", collect([
+                    "type" => "alert-warning",
+                    "title" => "Stock : ",
+                    "body" => "Vous avez bien suprimer le stock"
+                ]));
     }
 }

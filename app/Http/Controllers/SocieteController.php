@@ -33,7 +33,12 @@ class SocieteController extends Controller
         // check if the form is already created
         $company = Societe::where("identifiant_fiscal", "=", $formFields["identifiant_fiscal"])->first();
         if ($company) {
-            return redirect("/")->with("message", "cette entreprise existe déjà");
+            return redirect("/")
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Societe : ",
+                        "body" => "cette entreprise existe déjà"
+                    ]));
         }
 
         // create a new company
@@ -50,7 +55,12 @@ class SocieteController extends Controller
             "statu" => "gerant"
         ]]);
         // redirect to finish registration
-        return redirect("/users/new_manager");
+        return redirect("/users/new_manager")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Societe : ",
+                    "body" => "Vous avez bien crée la societe, merci de cree le gerant"
+                ]));
 
     }
 }

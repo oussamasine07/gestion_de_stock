@@ -84,9 +84,9 @@
                 <span>Lock Screen</span>
               </a>
               <form action="/users/logout" method="POST">
-                <i class="ti ti-power"></i>
+                <i class="ti ti-power text-danger"></i>
                 @csrf
-                <button type="submit">Logout</button>
+                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
               </form>
             </div>
           </div>
@@ -121,6 +121,7 @@
           <label>Application</label>
           <i class="ti ti-layout-kanban"></i>
         </li>
+
 
         <li class="pc-item pc-hasmenu">
           <a href="#!" class="pc-link">
@@ -437,6 +438,13 @@
 <!-- [ Main Content ] start -->
 <div class="pc-container">
   <div class="pc-content">
+    @php
+        $message = session()->get("message");
+    @endphp
+    @if (session()->has("message"))
+      <x-alert :message=$message />
+    @endif
+
     @yield('admin_section')
   </div>
 </div>
@@ -468,6 +476,7 @@
 <script src="{{ asset('js/config.js') }}"></script>
 <script src="{{ asset('js/pcoded.js') }}"></script>
 <script src="{{ asset('js/plugins/feather.min.js') }}"></script>
+<script src="//unpkg.com/alpinejs" defer></script>
 </body>
 <!-- [Body] end -->
 </html>

@@ -21,7 +21,6 @@ class FournisseurController extends Controller
 
     public function create(Request $request)
     {
-        
         return view("fournisseur.create");
     }
 
@@ -47,8 +46,13 @@ class FournisseurController extends Controller
         $supplier = Fournisseur::where("raison_social", "=", $formFields["raison_social"])->first();
 
         if ($supplier) {
-            return redirect("/fournisseurs/create")
-                        ->with("message", "this user is already registered");
+            return redirect()
+                    ->route("fournisseurs.create")
+                    ->with("message", collect([
+                        "type" => "alert-danger",
+                        "title" => "Fournisseur Regeté: ",
+                        "body" => "cette forunisseur est déja ajouter"
+                    ]));
         }
 
         // insert into DB
@@ -59,7 +63,13 @@ class FournisseurController extends Controller
         if ($request->query("action") == "achat") {
             return redirect("/achat/create");
         } else {
-            return redirect("/fournisseurs");
+            return redirect()
+                    ->route("fournisseurs.index")
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Fournisseur Crée: ",
+                        "body" => "cette forunisseur est bien ajouter"
+                    ]));
         }
     }
 
@@ -95,7 +105,13 @@ class FournisseurController extends Controller
         Fournisseur::where("id", $id)
             ->update($formFields);
 
-        return redirect("/fournisseurs");
+        return redirect()
+                ->route("fournisseurs.index")
+                ->with("message", collect([
+                    "type" => "alert-warning",
+                    "title" => "Fournisseur Ajoure: ",
+                    "body" => "Vous avez bien mettre ajour le fournisseur"
+                ]));
     }
 
     public function destroy(string $id)
@@ -103,6 +119,12 @@ class FournisseurController extends Controller
         Fournisseur::where("id", $id)
             ->delete();
         
-            return redirect("/fournisseurs");
+            return redirect()
+                    ->route("fournisseurs.index")
+                    ->with("message", collect([
+                        "type" => "alert-success",
+                        "title" => "Fournisseur Suprimer: ",
+                        "body" => "cette forunisseur est bien suprimer"
+                    ]));
     }
 }

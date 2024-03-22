@@ -43,6 +43,11 @@ class Vente extends Model
         return $this->morphMany(Livraison::class, "produitLiverable");
     }
 
+    public function livraison ()
+    {
+        return $this->morphMany(Livraison::class, "liverable");
+    }
+
     public function etatPaiment () 
     {
         // return $this->hasOne(EtatPaiement::class);

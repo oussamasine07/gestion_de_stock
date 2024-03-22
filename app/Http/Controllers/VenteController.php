@@ -81,7 +81,13 @@ class VenteController extends Controller
         // dd($vente);
 
         if ($vente) {
-            return redirect("/commandes")->with("message", "cette facture est dejat exist!");
+            return redirect()
+                    ->route("commandes.index")
+                    ->with("message", collect([
+                        "type" => "alert-danger",
+                        "title" => "Vente : ",
+                        "body" => "Cette facture est dejat exist!"
+                    ]));
         }
 
         // store the invoice here
@@ -102,7 +108,13 @@ class VenteController extends Controller
             ArticleVente::create($article);
         }
         
-        return redirect()->route("ventes.index");
+        return redirect()
+                ->route("ventes.index")
+                ->with("message", collect([
+                    "type" => "alert-success",
+                    "title" => "Vente : ",
+                    "body" => "La facture est bien crée!"
+                ]));
     }
 
 

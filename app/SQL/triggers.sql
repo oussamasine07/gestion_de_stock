@@ -147,3 +147,20 @@ BEGIN
         	AND
        	etat_produits_livres.article = article COLLATE utf8mb4_unicode_ci;
 END
+
+SELECT 
+	ventes.id,
+    ventes.numero_facture, 
+	ventes.date_facture, 
+	etat_paiements.total_facture,
+	etat_paiements.montant_regle,
+	etat_paiements.rest_regle,
+	etat_paiements.etat_reglement,
+	clients.nom_ou_raison_social
+FROM ventes
+INNER JOIN 
+	etat_paiements ON etat_paiements.payable_id = ventes.id
+INNER JOIN 
+	clients ON clients.id = ventes.client_id
+INNER JOIN 
+	societes ON societes.id = clients.societe_id;
